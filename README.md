@@ -1,5 +1,7 @@
-# sorting-schools-2019
-Replication code for "Sorting Schools: A Computational Analysis of Charter School Identities and Stratification" research article by Jaren Haber, UC Berkeley.  Paper investigates the relationships between charter school and school district poverty &amp; race, on one hand, and school ideology and academic performance, on the other.
+# Sorting Schools:
+## A Computational Analysis of Charter School Identities and Stratification
+Author: Jaren Haber, PhD Candidate in Sociology at UC Berkeley
+Date: Spring 2019
 
 ## Paper Abstract
 Research shows that charter schools are more segregated by race and class than traditional public schools. I investigate an under-examined mechanism for this segregation: Charter schools project identities corresponding to parents’ race- and class-specific parenting styles and educational values. I use computational text analysis to detect the emphasis on inquiry-based learning in the websites of all charter schools operating in the 2015-16 school year. I then estimate mixed linear regression models to test the relationships between ideological emphasis and school- and district-level poverty and ethnicity. I thereby transcend methodological problems in scholarship on charter school identities by collecting contemporary, valid, population-wide data, as well as by blending text analysis with hypothesis testing. Findings suggest that charter school identities are both race- and class-specific, lending weight to arguments for further regulating charter school enrollments. This project contributes to literatures on school choice, educational stratification, and organizational identity.
