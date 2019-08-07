@@ -9,6 +9,7 @@ Research shows that charter schools are more segregated by race and class than t
 - School district demographics: [American Community Survey (ACS), 2012-16](https://www.census.gov/programs-surveys/acs/data/summary-file.html)
 - School academic performance: [EdFacts Assessment Proficiency, 2015-16](https://www2.ed.gov/about/inits/ed/edfacts/data-files/index.html) 
 - Additional school information (not used in analysis): [Civil Rights Data Collection (CRDC), 2015-16](https://www2.ed.gov/about/offices/list/ocr/docs/crdc-2015-16.html)
+- Charter Management Organization (CMO) directory (supplemented by author): Stanford [Center for Research on Education Outcomes](https://credo.stanford.edu/pdfs/CMO%20FINAL.pdf)
 - School district child poverty information (not used in analysis):[Small Area Income and Poverty Estimates (SAIPE) Program](https://www.census.gov/programs-surveys/saipe.html)
 
 ## Notes
