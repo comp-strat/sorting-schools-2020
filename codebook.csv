@@ -1,0 +1,103 @@
+﻿Variable name,Description,Used in analysis,Data source/basis,Variable type
+inquirycount,# of words on school's website matching inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
+inquiryprop,% of words on school's website matching inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Ratio
+disciplinecount,# of words on school's website matching formal discipline (FD) dictionary; 'ideological emphasis' on FD,no,Author,Count
+disciplineprop,% of words on school's website matching formal discipline (FD) dictionary; 'ideological emphasis' on FD,no,Author,Ratio
+traditionalprop,% of words on school's website matching traditional learning dictionary; 'ideological emphasis' on traditionalism,no,Author,Ratio
+progressiveprop,% of words on school's website matching progressive learning dictionary; 'ideological emphasis' on progressivism,no,Author,Ratio
+pocschoolprop,% Students in school: People of color,yes,CCD PSUS 2015-16,Num
+pocschoolcount,# Students in school: People of color,no,CCD PSUS 2015-16,Count
+povertyschoolprop,% of students in schooleligible for free lunch or reduced-price lunch,yes,CCD PSUS 2015-16,Num
+povertyschoolcount,# of students in schooleligible for free lunch or reduced-price lunch,no,CCD PSUS 2015-16,Num
+primary,Whether a primary school: from PK-03 to PK-07,yes,CCD PSUS 2015-16,Binary
+middle,Whether a middle school: from 04-07 to 04-09,yes,CCD PSUS 2015-16,Binary
+high,Whether a high school: 07-12 to 12,yes,CCD PSUS 2015-16,Binary
+otherlevel,Whether some other school level (including ungraded),yes,CCD PSUS 2015-16,Binary
+level,"School level: 1 = Primary (low grade = PK through 03; high grade = PK through 08)
+2 = Middle (low grade = 04 through 07; high grade = 04 through 09)
+3 = High (low grade = 07 through 12; high grade = 12 only)
+4 = Other (any other configuration not falling within the above three categories;including ungraded)
+N = Not applicable",no,CCD PSUS 2015-16,Char
+lnage,Number of years since school opened (logged),yes,Author,Num
+age,Number of years since school opened,no,Author,Num
+lnstudents,Number of students in school (logged),yes,CCD PSUS 2015-16,Num
+students,Number of students in school,no,CCD PSUS 2015-16,Count
+urban,"Whether school is in urban area. Recoded from locale code: 1 if City, 0 if Suburb, Town, or Rural",yes,CCD PSUS 2015-16,Binary
+numwords,Total number of words captured from school's website,yes,Author,Count
+numpages,Total number of pages captured from school's website,no,Author,Count
+numpdfs,Total number of PDFs captured from school's website,no,Author,Count
+pctpdfs,Percentage of pages captured from school's websites that are PDFs,yes,Author,Ratio
+cmo,Whether school is managed by a charter management organization,no,"CREDO 2017, author",Binary
+cmoname,Name of charter management organization managing school,yes,"CREDO 2017, author",Char
+cmonum,Number of charter management organization managing school,no,"CREDO 2017, author",Num
+state,State acronym,yes,CCD PSUS 2015-16,Char
+statenum,State number,no,CCD PSUS 2015-16,Num
+geodistrict,NCES Agency Identification Number for school district in which school is physically located,yes,CCD PSUS 2015-16,Num
+_mi_id,Observation ID (STATA mi module),yes,Author,Num
+_mi_miss,Whether has missing values (STATA mi module),yes,Author,Num
+_mi_m,Imputation dataset number (STATA mi module),yes,Author,Num
+math1617,Percentage of students in school that scored at or above proficient in mathematics in SY 2016-17,no,EdFacts 2015-16,Num
+readlevel13,"Degree of data “blurring” by USDE in 2013-14 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",no,EdFacts 2015-16,Num
+mathlevel13,"Degree of data “blurring” by USDE in 2013-14 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",no,EdFacts 2015-16,Num
+readall13,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2013-14,no,EdFacts 2015-16,Num
+mathall13,Percentage of students in school that scored at or above proficient in mathematics in SY 2013-14,no,EdFacts 2015-16,Num
+readlevel14,"Degree of data “blurring” by USDE in 2014-15 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",yes,EdFacts 2015-16,Num
+mathlevel14,"Degree of data “blurring” by USDE in 2014-15 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",yes,EdFacts 2015-16,Num
+readall14,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2014-15,yes,EdFacts 2015-16,Num
+mathall14,Percentage of students in school that scored at or above proficient in mathematics in SY 2014-15,yes,EdFacts 2015-16,Num
+readlevel15,"Degree of data “blurring” by USDE in 2015-16 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",yes,EdFacts 2015-16,Num
+mathlevel15,"Degree of data “blurring” by USDE in 2015-16 to protect student groups’ privacy. This score ranges from 1 (percentiles reported, e.g. 95% academic proficiency for a school) to 50 (medians reported, e.g. 50-100% proficiency), with higher blurring reflecting less precise data. ",yes,EdFacts 2015-16,Num
+readall15,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2015-16,yes,EdFacts 2015-16,Num
+mathall15,Percentage of students in school that scored at or above proficient in mathematics in SY 2015-16,yes,EdFacts 2015-16,Num
+reading1314,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2013-14,no,EdFacts 2015-16,Char
+math1314,Percentage of students in school that scored at or above proficient in mathematics in SY 2013-14,no,EdFacts 2015-16,Char
+reading1415,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2014-15,no,EdFacts 2015-16,Char
+math1415,Percentage of students in school that scored at or above proficient in mathematics in SY 2014-15,no,EdFacts 2015-16,Char
+reading1516,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2015-16,no,EdFacts 2015-16,Char
+math1516,Percentage of students in school that scored at or above proficient in mathematics in SY 2015-16,no,EdFacts 2015-16,Char
+reading1617,Percentage of students in school that scored at or above proficient in reading/language arts in SY 2016-17,no,EdFacts 2015-16,Char
+readingscore,Placeholder when calculating year-specific reading proficiency rates,no,EdFacts 2015-16,Num
+mathscore,Placeholder when calculating year-specific math proficiency rates,no,EdFacts 2015-16,Num
+readpct,Reading proficiency rate if reported at percentile level,no,EdFacts 2015-16,Num
+mathpct,Math proficiency rate if reported at percentile level,no,EdFacts 2015-16,Num
+read5,Reading proficiency rate if reported at ventile level,no,EdFacts 2015-16,Num
+math5,Math proficiency rate if reported at ventile level,no,EdFacts 2015-16,Num
+read10,Reading proficiency rate if reported at decile level,no,EdFacts 2015-16,Num
+math10,Math proficiency rate if reported at decile level,no,EdFacts 2015-16,Num
+read20,Reading proficiency rate if reported at quintile level,no,EdFacts 2015-16,Num
+math20,Math proficiency rate if reported at quintile level,no,EdFacts 2015-16,Num
+read50,Reading proficiency rate if reported at median level,no,EdFacts 2015-16,Num
+math50,Math proficiency rate if reported at median level,no,EdFacts 2015-16,Num
+ethnicisolated99,Whether school is ethnically isolated (>99% students of color),no,CCD PSUS 2015-16,Binary
+ethnicisolated95,Whether school is ethnically isolated (>95% students of color),no,CCD PSUS 2015-16,Binary
+ethnicisolated90,Whether school is ethnically isolated (>90% students of color),no,CCD PSUS 2015-16,Binary
+ethnicisolated80,Whether school is ethnically isolated (>80% students of color),no,CCD PSUS 2015-16,Binary
+ethnicisolated70,Whether school is ethnically isolated (>70% students of color),no,CCD PSUS 2015-16,Binary
+pocschool,% Students in school: People of color,no,CCD PSUS 2015-16,Ratio
+povertyschool,% of students in schooleligible for free lunch or reduced-price lunch,no,CCD PSUS 2015-16,Ratio
+pocsd,% Total population in school district: People of color,no,CCD PSUS 2015-16,Ratio
+povertysd,% Families in school district: Income in Below Poverty Level ,no,CCD PSUS 2015-16,Ratio
+childpovertysd,% of children in school district below poverty level,no,SAIPE 2015-16,Ratio
+titlei,Whether a school is eligible for participation in a Title I (high poverty relief) program,no,CCD PSUS 2015-16,Binary
+collegesd,Population 25 years and over: Bachelor's degree or higher,no,ACS 2012-16,Ratio
+popdensity,Population density (per sq. mile) ,no,ACS 2012-16,Num
+unemployment,% Civilian population in labor force 16 years and over: Unemployed ,no,ACS 2012-16,Ratio
+foreignborn,% Total population: Foreign born ,no,ACS 2012-16,Ratio
+closerate,% of public schools in school district that closed between 2014-15 and 2015-16,no,Author,Ratio
+publicdensity,# of public schools in school district,no,Author,Num
+charterdensity,# of charter schools in school district,no,Author,Num
+teachers,Number of teachers in school,no,"CCD PSUS 2015-16, CRDC 2015-16",Count
+lnteachers,Number of teachers in school (logged),no,"CCD PSUS 2015-16, CRDC 2015-16",Num
+teacherratio,Student-teacher ratio,no,"CCD PSUS 2015-16, CRDC 2015-16",Ratio
+upperlevel,Whether school is a middle or high school,no,CCD PSUS 2015-16,Binary
+expulsions,Total number of students in school who received an expulsion in 2015-16 school year,no,CRDC 2015-16,Count
+suspensions,Total number of students in school who received a suspension in 2015-16 school year,no,CRDC 2015-16,Ratio
+incidents,"Total number of criminal incidents: sexual assault, robbert, physical attack, threats, or possession of firearm or explosive device. ",no,CRDC 2015-16,Ratio
+lawreferrals,Number of referrals to a law enforcement agency or official in school in 2015-16 school year,no,CRDC 2015-16,Ratio
+lepcount,Number of students in school of limited english proficiency (LEP) in 2015-16 school year,no,CRDC 2015-16,Count
+disabledcount,Number of students in school with disabilities in 2015-16 school year,no,CRDC 2015-16,Count
+approgram,Whether school has any students enrolled in Advanced Placement (AP) courses in 2015-16 school year,no,CRDC 2015-16,Binary
+teachersccd,Number of teachers in school (from CCD data) in 2015-16 school year,no,CCD PSUS 2015-16,Count
+teacherscrdc,Number of teachers in school (from CRDC data) in 2015-16 school year,no,CRDC 2015-16,Count
+certcount,Number of certified teachers in school in 2015-16 school year,no,CRDC 2015-16,Count
+certrate,Proportion of certified teachers in school in 2015-16 school year,no,CRDC 2015-16,Ratio
