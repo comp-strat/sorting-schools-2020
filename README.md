@@ -17,7 +17,7 @@ Research shows that charter schools are more segregated by race and class than t
 ## Notes
 See `codebook.csv` for detailed information on all variables in data files. For comprehensiveness, variables not used in final analysis (see `mixed_models.do`) are retained.
 
-Data files (.dta and .csv files) are post-processing (see `data_preparation.do`).
+Data files (.dta and .csv)--other than CMO and URL lists--are post-processing (see `data_preparation.do`).
 
 Web-crawling speeds were throttled to prevent server overload, and web-crawled site data is kept private pursuant to school website copyrights. 
 
