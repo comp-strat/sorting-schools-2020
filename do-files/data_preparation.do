@@ -2,12 +2,12 @@
 *** CHARTER SCHOOL ANALYSIS SET-UP DO-FILE
 ***
 *** Author: Jaren Haber, PhD Candidate
-*** URL: https://github.com/jhaber-zz
+*** URL: https://github.com/URAP-charter/sorting-schools-2019
 *** Institution: University of California, Berkeley
 *** Project: Charter school identities
 ***
 *** Date created: January 3, 2019
-*** Date modified: April 17, 2019
+*** Date modified: October 8, 2019
 ***
 *** Description: Prepares data for analysis by modifying variables,
 *** performing multiple imputation, and saving data set for later use.
@@ -19,11 +19,11 @@ ssc install labvars, replace
 * Specify current directory:
 cd "/hdir/0/jhaber/Projects/charter_data/stats_team/"
 
-log using "logs/charter_setup_mi5_keepschpov.smcl", replace
+log using "logs/charter_setup_mi100_100819.smcl", replace
 
 * Import data:
-*import delimited data/stats_data_2015.csv, clear 
-use data/stats_data_2015_original.dta, clear
+import delimited data/charters_stats_2015_v2a_counts_inqnew.csv, clear 
+*use data/stats_data_2015_original.dta, clear
 
 
 ** -----------------------------------------------------
@@ -483,14 +483,14 @@ replace cmoname = "None" if missing(cmoname)
 
 * Drop if missing level variables or inquiry/discipline variables:
 drop if missing(primary) | missing(middle) | missing(high) | missing(otherlevel)
-drop if missing(inquirycount) | missing(disciplinecount) | missing(numwords) | numwords==0
+drop if missing(inquiry_full_log) | missing(numwords) | numwords==0
 drop if missing(pocschoolcount)
 
 * Replace with missing any remaining odd codes:
 replace pocschoolcount = . if pocschoolcount==-12 | pocschoolcount==-54
 
 * Drop vars we don't impute directly
-drop povertyschoolcount inquiryprop
+drop povertyschoolcount
 
 * Convert number PDF pages to percentage:
 gen pctpdfs = numpdfs/numpages
@@ -541,12 +541,13 @@ mi register imputed lnage lnstudents lnteachers readall13 readall14 readall15 ma
 * Register as regular those vars with complete observations (may be used to help in imputation equations):
 mi register regular closerate publicdensity charterdensity urban titlei ///
 cmo cmonum state statenum geodistrict numwords numpages numpdfs ///
-inquirycount disciplineprop traditionalprop progressiveprop ///
+inquiry_seed_count inquiry_seed_prop inquiry_seed_log inquiry_narrow_count inquiry_narrow_prop inquiry_narrow_log ///
+inquiry_full_count inquiry_full_prop inquiry_full_log inquiry_full_nohands_count inquiry_full_nohands_prop inquiry_full_nohands_log ///
+traditional_prop progressive_prop ///
 pocschool pocschoolcount ///
 ethnicisolated99 ethnicisolated95 ethnicisolated90 ethnicisolated80 ethnicisolated70
 
-gen inquiryprop = inquirycount/numwords
-mi register passive inquiryprop pctpdfs
+mi register passive pctpdfs
 
 * For reproducibility, set random seed:
 set seed 43
@@ -611,10 +612,10 @@ mathlevel15 ///
 ///
 ///
 = numpdfs numwords numpages pocschoolcount ///
-inquiryprop disciplineprop traditionalprop progressiveprop ///
+inquiry_full_prop traditional_prop progressive_prop ///
 closerate publicdensity charterdensity ///
 i.urban statenum cmonum geodistrict, ///
-add(5) rseed(43) dots augment
+add(100) rseed(43) dots augment
 
 
 ** -----------------------------------------------------
@@ -650,11 +651,15 @@ gen pocschoolprop = pocschoolcount/students
 mi register passive povertyschoolcount upperlevel teacherratio pocschoolprop povertyschoolprop
 
 * Drop if still missing key variables:
-quietly mi xeq 1 / 5: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
-quietly mi xeq 1 / 5: drop if missing(pocschool) | missing(povertyschoolcount)
+quietly mi xeq 1 / 100: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
+quietly mi xeq 1 / 100: drop if missing(pocschool) | missing(povertyschoolcount)
 
-* Label variables:
-labvars inquirycount "IBL emphasis (#)" inquiryprop "IBL emphasis (%)" disciplinecount "FD emphasis (#)" disciplineprop "FD emphasis (%)" ///
+* Label variables: 
+* disciplinecount "FD emphasis (#)" disciplineprop "FD emphasis (%)"
+labvars inquiry_seed_count "Emphasis: IBL seed (#)" inquiry_seed_prop "Emphasis: IBL seed (%)" inquiry_seed_log "Emphasis: IBL seed (logged ratio)" ///
+inquiry_narrow_count "Emphasis: IBL narrow (#)" inquiry_narrow_prop "Emphasis: IBL narrow (%)" inquiry_narrow_log "Emphasis: IBL narrow (logged ratio)" ///
+inquiry_full_count "Emphasis: IBL full (#)" inquiry_full_prop "Emphasis: IBL full (%)" inquiry_full_log "Emphasis: IBL full (logged ratio)" ///
+inquiry_full_nohands_count "Emphasis: IBL full w/o hands-on (#)" inquiry_full_nohands_prop "Emphasis: IBL full w/o hands-on (%)" inquiry_full_nohands_log "Emphasis: IBL full w/o hands-on (logged ratio)" ///
 pocschool "% students of color (school)" pocschoolprop "% students of color (school)" pocschoolcount "# students of color" ///
 povertyschool "% students in poverty (school)" povertyschoolprop "% students in poverty (school)"  povertyschoolcount "# students in poverty" ///
 pocsd "% people of color (school district)" povertysd "% people in poverty (school district)" ///
@@ -669,6 +674,6 @@ urban "Urban locale" pctpdfs "% PDF pages" numwords "# words", ///
 alternate
 
 
-save "data/stats_data_2015_mi5_keepschpov.dta", replace
+save "data/stats_data_2015_mi100.dta", replace
 
 log close
