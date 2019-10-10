@@ -521,7 +521,7 @@ drop if missing(pocschoolcount)
 ** -----------------------------------------------------
 
 * Look at variables missing cases:
-*mvpatterns inquiry discipline povertyschool pocschool povertysd pocsd primary middle high otherlevel age students urban cmo titlei readall13 readall14 readall15 mathall13 mathall14 mathall15 expulsions suspensions incidents lawreferrals lepratio disabledratio approgram teachers teacherratio certcount certrate
+*mvpatterns inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry_full_nohands_log povertyschool pocschool povertysd pocsd primary middle high otherlevel age students urban cmo titlei readall13 readall14 readall15 mathall13 mathall14 mathall15 expulsions suspensions incidents lawreferrals lepratio disabledratio approgram teachers teacherratio certcount certrate
 
 /* List of vars to impute, both those used in models and those that help with multiple imputation:
 * School students and controls:
