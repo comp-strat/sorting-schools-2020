@@ -29,9 +29,9 @@ mi xeq 0 1: tabstat inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry
 
 /* ROBUSTNESS CHECKS TO IMPLEMENT: 
 
-1. Alternative Measures I: Lagged academic proficiency rates (instead of 2015-16) :
+1. Alternative Measures I: Lagged academic proficiency rates (instead of 2014-15) :
     A. 2013-14 scores
-    B. 2014-15 scores
+    B. 2015-16 scores
 
 2. Alternative Measures II: Narrow dictionaries of IBL (rather than 50-term inquiry_full_log):
     A. Seed dictionary = 5 terms (inquiry_seed_log)
@@ -49,7 +49,7 @@ mi xeq 0 1: tabstat inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry
 
 log using "logs/robust_laggedscores_mi5_linear_101019.smcl", replace
 ** -----------------------------------------------------
-** 1. ALTERNATIVE MEASURES I: LAGGED ACADEMIC PROFICIENCY RATES
+** 1. ALTERNATIVE MEASURES I: LAGGED/NOT ACADEMIC PROFICIENCY RATES
 ** -----------------------------------------------------
 
 *
@@ -71,20 +71,20 @@ mi est, dots post: mixed pocschoolprop inquiry_full_log readall13 mathall13 prim
 
 
 *
-* 1B. RE-RUN LINEAR MIXED MODELS USING LAGGED ACADEMIC SCORES: 2014-15
+* 1B. RE-RUN LINEAR MIXED MODELS USING NOT-LAGGED ACADEMIC SCORES: 2015-16
 *
 
 * PT 2: 
 * 2. academic performance
-mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 2. academic performance
-mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
 translate "logs/robust_laggedscores_mi5_linear_101019.smcl" "logs/robust_laggedscores_mi5_linear_101019.pdf"

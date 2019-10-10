@@ -138,8 +138,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
 
 * 2. academic performance
-mi xeq 1 / 5: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
-mi est, dots post: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
+mi xeq 1 / 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
 est store pov2
 ereturn list
 est save "model_estimates/2c_schpov_acad_mi100_linear.ster", replace
@@ -148,8 +148,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M2: Academic proficiency")
 
 * 3. fully specified
-mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
-mi est, dots post: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
 est store pov3
 ereturn list
 est save "model_estimates/2d_schpov_full_mi100_linear.ster", replace
@@ -195,8 +195,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
 
 * 2. academic performance
-mi xeq 1 / 5: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
-mi est, dots post: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
+mi xeq 1 / 5: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 est store poc2
 ereturn list
 est save "model_estimates/3c_schpoc_acad_mi100_linear.ster", replace
@@ -205,8 +205,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M2: Academic proficiency")
 
 * 3. fully specified
-mi xeq 1 / 5: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
-mi est, dots post: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi xeq 1 / 5: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
 est store poc3
 ereturn list
 est save "model_estimates/3d_schpoc_full_mi100_linear.ster", replace
