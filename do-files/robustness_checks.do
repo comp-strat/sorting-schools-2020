@@ -256,6 +256,10 @@ log close
 translate "logs/robust_filtscores_mi5_linear_101019.smcl" "logs/robust_filtscores_mi5_linear_101019.pdf"
 
 
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
+
 log using "logs/robust_filtibl_mi5_linear_101019.smcl", replace
 *
 * 3B. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: REMOVING HUGE WEBSITE OUTLIERS
@@ -299,6 +303,10 @@ log close
 translate "logs/robust_filtibl_mi5_linear_101019.smcl" "logs/robust_filtibl_mi5_linear_101019.pdf"
 
 
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
+
 log using "logs/robust_filtnumpages_mi5_linear_101019.smcl", replace
 *
 * 3C. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: NUMBER PAGES
@@ -341,6 +349,10 @@ mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary m
 log close
 translate "logs/robust_filtnumpages_mi5_linear_101019.smcl" "logs/robust_filtnumpages_mi5_linear_101019.pdf"
 
+
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
 
 log using "logs/robust_filtstudents_mi5_linear_101019.smcl", replace
 *
