@@ -5,9 +5,7 @@
 *** URL: https://github.com/jhaber-zz
 *** Institution: University of California, Berkeley
 *** Project: Charter school identities
-***
 *** Date created: February, 2019
-*** Date modified: October 10, 2019
 ***
 *** Description: Checks validity of mixed linear regression using various robustness checks,
 *** some including filtered data sets (to deal with outliers) and some with alternative measures.
@@ -23,7 +21,7 @@ use "data/charter_schools_data_5_imputations.dta", clear
 mi update
 
 * Double-check all continuous vars are scaled the same across original and imputed datasets:
-mi xeq 0 1: tabstat inquiry_full_log readall15 mathall15 pocschoolprop povertyschoolprop pocsd povertysd pctpdfs, stat(n mean median min max sd)
+mi xeq 0 1: tabstat inquiry_full_log readall15 mathall15 readall14 mathall14 readall13 mathall13 pocschoolprop povertyschoolprop pocsd povertysd pctpdfs, stat(n mean median min max sd)
 
 * Make sure original and imputed datasets have same summary stats for key variables:
 mi xeq 0 1: tabstat inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry_full_nohands_log readall15 mathall15 pocschoolprop povertyschoolprop pocsd povertysd pctpdfs, stat(n mean median min max sd)
@@ -43,9 +41,8 @@ mi xeq 0 1: tabstat inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry
 3. Filter Dataset: Restrict sample to only those schools with:
     A. precise academic data: readlevel14 & mathlevel14 == 1
     B. inquiry_full_count < 10000
-    C. numwords > 10
-    D. numpages < 100
-    E. students > 10
+    C. numpages < 100
+    D. students > 10
     
 */
 
@@ -302,52 +299,9 @@ log close
 translate "logs/robust_filtibl_mi5_linear_101019.smcl" "logs/robust_filtibl_mi5_linear_101019.pdf"
 
 
-log using "logs/robust_filtnumwords_mi5_linear_101019.smcl", replace
-*
-* 3C. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: NUMBER WORDS
-*
-
-mi xeq: drop if numwords < 10
-
-* PT 1:
-* 0. controls only
-mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 1. school poverty
-mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 2. school race
-mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 3. school district poverty
-mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 4. school district race
-mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-
-* PT 2: 
-* 0. controls only
-mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
-* 1. IBL
-mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
-* 2. academic performance
-mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
-* 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
-
-* PT 3:
-* 0. controls only
-mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
-* 1. IBL
-mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
-* 2. academic performance
-mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
-* 3. fully specified
-mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
-
-log close
-translate "logs/robust_filtnumwords_mi5_linear_101019.smcl" "logs/robust_filtnumwords_mi5_linear_101019.pdf"
-
-
 log using "logs/robust_filtnumpages_mi5_linear_101019.smcl", replace
 *
-* 3D. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: NUMBER PAGES
+* 3C. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: NUMBER PAGES
 *
 
 mi xeq: drop if numpages > 100
@@ -390,7 +344,7 @@ translate "logs/robust_filtnumpages_mi5_linear_101019.smcl" "logs/robust_filtnum
 
 log using "logs/robust_filtstudents_mi5_linear_101019.smcl", replace
 *
-* 3E. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: SCHOOL SIZE (# STUDENTS)
+* 3D. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: SCHOOL SIZE (# STUDENTS)
 *
 
 mi xeq: drop if students < 10
