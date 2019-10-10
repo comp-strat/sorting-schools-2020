@@ -7,7 +7,7 @@
 *** Project: Charter school identities
 ***
 *** Date created: January 3, 2019
-*** Date modified: October 8, 2019
+*** Date modified: October 9, 2019
 ***
 *** Description: Prepares data for analysis by modifying variables,
 *** performing multiple imputation, and saving data set for later use.
@@ -19,11 +19,10 @@ ssc install labvars, replace
 * Specify current directory:
 cd "/hdir/0/jhaber/Projects/charter_data/stats_team/"
 
-log using "logs/charter_setup_mi100_100819.smcl", replace
+log using "logs/charter_setup_mi5_100919.smcl", replace
 
 * Import data:
 import delimited data/charters_stats_2015_v2a_counts_inqnew.csv, clear 
-*use data/stats_data_2015_original.dta, clear
 
 
 ** -----------------------------------------------------
@@ -615,7 +614,7 @@ mathlevel15 ///
 inquiry_full_prop traditional_prop progressive_prop ///
 closerate publicdensity charterdensity ///
 i.urban statenum cmonum geodistrict, ///
-add(100) rseed(43) dots augment
+add(5) rseed(43) dots augment
 
 
 ** -----------------------------------------------------
@@ -651,8 +650,8 @@ gen pocschoolprop = pocschoolcount/students
 mi register passive povertyschoolcount upperlevel teacherratio pocschoolprop povertyschoolprop
 
 * Drop if still missing key variables:
-quietly mi xeq 1 / 100: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
-quietly mi xeq 1 / 100: drop if missing(pocschool) | missing(povertyschoolcount)
+quietly mi xeq 1 / 5: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
+quietly mi xeq 1 / 5: drop if missing(pocschool) | missing(povertyschoolcount)
 
 * Label variables: 
 * disciplinecount "FD emphasis (#)" disciplineprop "FD emphasis (%)"
@@ -674,6 +673,8 @@ urban "Urban locale" pctpdfs "% PDF pages" numwords "# words", ///
 alternate
 
 
-save "data/stats_data_2015_mi100.dta", replace
+* Save data to disk
+cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
+save "data/charter_schools_data_5_imputations.dta", replace
 
 log close

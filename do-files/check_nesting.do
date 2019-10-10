@@ -36,7 +36,7 @@ mi update
 
 log using "logs/nesting_mi_linear_100919.smcl", replace
 
-** -----------------------------------------------------
+/** -----------------------------------------------------
 ** CHECK NESTING IN EACH MODEL
 ** -----------------------------------------------------
 
@@ -93,7 +93,7 @@ mi xeq 1: quietly xtmixed pocschoolprop readall15 mathall15 primary middle high 
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 log close
-
+*/
 
 log using "logs/results_1_ibl_mi100_linear_clusts_100919.smcl", replace
 
@@ -112,9 +112,6 @@ log using "logs/results_1_ibl_mi100_linear_clusts_100919.smcl", replace
 * 0. controls only
 mi xeq 1 / 5: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-* estat ic
-* fitstat
-* ereturn list
 est store ibl0
 est save "models/1a_ibl_controls_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1a_ibl_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
