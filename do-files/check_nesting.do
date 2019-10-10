@@ -5,9 +5,7 @@
 *** URL: https://github.com/URAP-charter/sorting-schools-2019
 *** Institution: University of California, Berkeley
 *** Project: Charter school identities
-***
 *** Date created: February, 2019
-*** Date modified: October 9, 2019
 ***
 *** Description: Calculates extent of nesting of each DV in state, CMO, and school district via rho (intraclass correlation coefficient). 
 *** Uses FULLY nested (random effects for each DV in each level) mixed-effects linear regression to estimate the effects of 
@@ -30,11 +28,11 @@ ssc install xtmrho, replace
 cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
 
 * Import imputed data (100 imputations with MI):
-use "data/charter_schools_data.dta", clear
+use "data/charter_schools_data_100_imputations.dta", clear
 mi update
 
-/*
-log using "logs/nesting_mi_linear_100919.smcl", replace
+
+log using "logs/nesting_mi_linear_101019.smcl", replace
 ** -----------------------------------------------------
 ** CHECK NESTING IN EACH MODEL
 ** -----------------------------------------------------
@@ -92,7 +90,7 @@ mi xeq 1: quietly xtmixed pocschoolprop readall15 mathall15 primary middle high 
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 log close
-*/
+translate "logs/nesting_mi_linear_101019.smcl" "logs/nesting_mi_linear_101019.pdf"
 
 
 log using "logs/results_quickpass_mi100_linear_clusts_101019.smcl", replace
@@ -141,10 +139,10 @@ log close
 translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/results_quickpass_mi100_linear_clusts_101019.pdf"
 
 
-log using "logs/results_1_ibl_mi100_linear_clusts_100919.smcl", append
+log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
 
 ** -----------------------------------------------------
-** FULLY NESTED MIXED-EFFECTS LINEAR MODELS PT 1: RACE & POVERTY -> IBL
+** FULLY NESTED MIXED-EFFECTS LINEAR MODELS (100 IMPUTATIONS) PT 1: RACE & POVERTY -> IBL
 ** -----------------------------------------------------
 
 * 0. controls only
@@ -195,12 +193,12 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
-translate "logs/results_1_ibl_mi100_linear_clusts_100919.smcl" "logs/results_1_ibl_mi100_linear_clusts_100919.pdf"
+translate "logs/results_1_ibl_mi100_linear_clusts_101019.smcl" "logs/results_1_ibl_mi100_linear_clusts_101019.pdf"
 
 
-log using "logs/results_2_schpov_mi100_linear_clusts_100919.smcl", replace
+log using "logs/results_2_schpov_mi100_linear_clusts_101019.smcl", replace
 ** -----------------------------------------------------
-** FULLY NESTED MIXED-EFFECTS LINEAR MODELS PT 2: IBL, ACADEMICS -> POVERTY
+** FULLY NESTED MIXED-EFFECTS LINEAR MODELS (100 IMPUTATIONS) PT 2: IBL, ACADEMICS -> POVERTY
 ** -----------------------------------------------------
 
 * 0. controls only
@@ -242,12 +240,12 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_clusts_100919.smcl" "logs/results_2_schpov_mi100_linear_clusts_100919.pdf"
+translate "logs/results_2_schpov_mi100_linear_clusts_101019.smcl" "logs/results_2_schpov_mi100_linear_clusts_101019.pdf"
 
 
-log using "logs/results_3_schpoc_mi100_linear_clusts_100919.smcl", replace
+log using "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl", replace
 ** -----------------------------------------------------
-** FULLY NESTED MIXED-EFFECTS LINEAR MODELS PT 3: IBL, ACADEMICS -> RACE
+** FULLY NESTED MIXED-EFFECTS LINEAR MODELS (100 IMPUTATIONS) PT 3: IBL, ACADEMICS -> RACE
 ** -----------------------------------------------------
 
 * 0. controls only
@@ -286,4 +284,4 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_3_schpoc_mi100_linear_clusts_100919.smcl" "logs/results_3_schpoc_mi100_linear_clusts_100919.pdf"
+translate "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl" "logs/results_3_schpoc_mi100_linear_clusts_101019.pdf"

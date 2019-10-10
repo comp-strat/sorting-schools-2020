@@ -5,9 +5,7 @@
 *** URL: https://github.com/URAP-charter/sorting-schools-2019
 *** Institution: University of California, Berkeley
 *** Project: Charter school identities
-***
 *** Date created: February, 2019
-*** Date modified: October 9, 2019
 ***
 *** Description: Uses mixed-effects linear regression to estimate the effects of school and community
 *** class & race on ed. ideology (part 1), and of ed. ideology and academic proficiency on 
@@ -33,11 +31,11 @@ ssc install asdoc, replace
 cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
 
 * Import imputed data (100 imputations with MI):
-use "data/charter_schools_data.dta", clear
+use "data/charter_schools_data_100_imputations.dta", clear
 mi update
 
 
-log using "logs/results_1_ibl_mi100_linear_100919.smcl", replace
+log using "logs/results_1_ibl_mi100_linear_101019.smcl", replace
 ** -----------------------------------------------------
 ** MIXED-EFFECTS LINEAR MODELS PT 1: RACE & POVERTY -> IBL
 ** -----------------------------------------------------
@@ -103,10 +101,10 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
-translate "logs/results_1_ibl_mi100_linear_100919.smcl" "logs/results_1_ibl_mi100_linear_100919.pdf"
+translate "logs/results_1_ibl_mi100_linear_101019.smcl" "logs/results_1_ibl_mi100_linear_101019.pdf"
 
 
-log using "logs/results_2_schpov_mi100_linear_100919.smcl", replace
+log using "logs/results_2_schpov_mi100_linear_101019.smcl", replace
 ** -----------------------------------------------------
 ** MIXED-EFFECTS LINEAR MODELS PT 2: IBL, ACADEMICS -> POVERTY
 ** -----------------------------------------------------
@@ -160,10 +158,10 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_100919.smcl" "logs/results_2_schpov_mi100_linear_100919.pdf"
+translate "logs/results_2_schpov_mi100_linear_101019.smcl" "logs/results_2_schpov_mi100_linear_101019.pdf"
 
 
-log using "logs/results_3_schpoc_mi100_linear_100919.smcl", replace
+log using "logs/results_3_schpoc_mi100_linear_101019.smcl", replace
 ** -----------------------------------------------------
 ** MIXED-EFFECTS LINEAR MODELS PT 3: IBL, ACADEMICS -> RACE
 ** -----------------------------------------------------
@@ -217,4 +215,4 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_3_schpoc_mi100_linear_100919.smcl" "logs/results_3_schpoc_mi100_linear_100919.pdf"
+translate "logs/results_3_schpoc_mi100_linear_101019.smcl" "logs/results_3_schpoc_mi100_linear_101019.pdf"
