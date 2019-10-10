@@ -7,7 +7,7 @@
 *** Project: Charter school identities
 ***
 *** Date created: January 3, 2019
-*** Date modified: October 9, 2019
+*** Date modified: October 10, 2019
 ***
 *** Description: Prepares data for analysis by modifying variables,
 *** performing multiple imputation, and saving data set for later use.
@@ -19,7 +19,7 @@ ssc install labvars, replace
 * Specify current directory:
 cd "/hdir/0/jhaber/Projects/charter_data/stats_team/"
 
-log using "logs/charter_setup_mi5_100919.smcl", replace
+log using "logs/charter_setup_mi5_101019.smcl", replace
 
 * Import data:
 import delimited data/charters_stats_2015_v2a_counts_inqnew.csv, clear 
@@ -482,7 +482,7 @@ replace cmoname = "None" if missing(cmoname)
 
 * Drop if missing level variables or inquiry/discipline variables:
 drop if missing(primary) | missing(middle) | missing(high) | missing(otherlevel)
-drop if missing(inquiry_full_log) | missing(numwords) | numwords==0
+drop if missing(inquiry_full_log) | missing(numwords) | numwords < 10
 drop if missing(pocschoolcount)
 
 * Replace with missing any remaining odd codes:
@@ -676,5 +676,7 @@ alternate
 * Save data to disk
 cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
 save "data/charter_schools_data_5_imputations.dta", replace
+export delimited using "data/charter_schools_data_5_imputations.csv", replace
 
 log close
+translate "logs/charter_setup_mi5_101019.smcl" "logs/data_preparation_5_imputations.pdf"
