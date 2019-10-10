@@ -90,6 +90,7 @@ mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high l
 mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_laggedscores_mi5_linear_101019.smcl" "logs/robust_laggedscores_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_narrowibl_mi5_linear_101019.smcl", replace
@@ -208,6 +209,7 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_nohands_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_narrowibl_mi5_linear_101019.smcl" "logs/robust_narrowibl_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_filtscores_mi5_linear_101019.smcl", replace
@@ -254,6 +256,7 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_filtscores_mi5_linear_101019.smcl" "logs/robust_filtscores_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_filtibl_mi5_linear_101019.smcl", replace
@@ -296,7 +299,7 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
-
+translate "logs/robust_filtibl_mi5_linear_101019.smcl" "logs/robust_filtibl_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_filtnumwords_mi5_linear_101019.smcl", replace
@@ -339,6 +342,7 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_filtnumwords_mi5_linear_101019.smcl" "logs/robust_filtnumwords_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_filtnumpages_mi5_linear_101019.smcl", replace
@@ -381,6 +385,7 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_filtnumpages_mi5_linear_101019.smcl" "logs/robust_filtnumpages_mi5_linear_101019.pdf"
 
 
 log using "logs/robust_filtstudents_mi5_linear_101019.smcl", replace
@@ -423,3 +428,4 @@ mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage 
 mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
+translate "logs/robust_filtstudents_mi5_linear_101019.smcl" "logs/robust_filtstudents_mi5_linear_101019.pdf"
