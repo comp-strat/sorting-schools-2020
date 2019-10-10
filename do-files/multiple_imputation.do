@@ -11,6 +11,9 @@
 *** performing multiple imputation. Saves data set for later use.
 ***---------------------------------------------------------------
 
+* Install package for labeling multiple variables at once:
+ssc install labvars, replace
+
 * Specify current directory:
 cd "/hdir/0/jhaber/Projects/charter_data/stats_team/"
 
