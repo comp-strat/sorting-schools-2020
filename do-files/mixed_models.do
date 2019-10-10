@@ -38,7 +38,6 @@ mi update
 
 
 log using "logs/results_1_ibl_mi100_linear_100919.smcl", replace
-
 ** -----------------------------------------------------
 ** MIXED-EFFECTS LINEAR MODELS PT 1: RACE & POVERTY -> IBL
 ** -----------------------------------------------------
@@ -104,6 +103,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
+translate "logs/results_1_ibl_mi100_linear_100919.smcl" "logs/results_1_ibl_mi100_linear_100919.pdf"
 
 
 log using "logs/results_2_schpov_mi100_linear_100919.smcl", replace
@@ -160,6 +160,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
+translate "logs/results_2_schpov_mi100_linear_100919.smcl" "logs/results_2_schpov_mi100_linear_100919.pdf"
 
 
 log using "logs/results_3_schpoc_mi100_linear_100919.smcl", replace
@@ -216,3 +217,4 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
+translate "logs/results_3_schpoc_mi100_linear_100919.smcl" "logs/results_3_schpoc_mi100_linear_100919.pdf"

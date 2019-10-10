@@ -19,7 +19,7 @@
 cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
 
 * Import and modify data:
-use "data/charters_schools_data_mi5.dta", clear
+use "data/charter_schools_data_5_imputations.dta", clear
 mi update
 
 * Double-check all continuous vars are scaled the same across original and imputed datasets:
@@ -64,16 +64,13 @@ log using "logs/robust_laggedscores_mi5_linear_101019.smcl", replace
 *mi xeq 1/ 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
 mi est, dots post: mixed povertyschoolprop readall13 mathall13 primary middle high lnage lnstudents urban readlevel13 mathlevel13 || geodistrict: , 
 * 3. fully specified
-*mi xeq 1/ 5: mixed povertyschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
-mi est, dots post: mixed povertyschoolprop inquiryprop readall13 mathall13 primary middle high lnage lnstudents urban pctpdfs readlevel13 mathlevel13 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop inquiry_full_log readall13 mathall13 primary middle high lnage lnstudents urban pctpdfs readlevel13 mathlevel13 || geodistrict: , 
 
 * PT 3:
 * 2. academic performance
-*mi xeq 1/ 5: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 mi est, dots post: mixed pocschoolprop readall13 mathall13 primary middle high lnage lnstudents urban readlevel13 mathlevel13 || state: || geodistrict: , 
 * 3. fully specified
-*mi xeq 1/ 5: mixed pocschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
-mi est, dots post: mixed pocschoolprop inquiryprop readall13 mathall13 primary middle high lnage lnstudents urban pctpdfs readlevel13 mathlevel13 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop inquiry_full_log readall13 mathall13 primary middle high lnage lnstudents urban pctpdfs readlevel13 mathlevel13 || state: || geodistrict: , 
 
 
 *
@@ -82,19 +79,15 @@ mi est, dots post: mixed pocschoolprop inquiryprop readall13 mathall13 primary m
 
 * PT 2: 
 * 2. academic performance
-*mi xeq 1/ 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
 mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
 * 3. fully specified
-*mi xeq 1/ 5: mixed povertyschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
-mi est, dots post: mixed povertyschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
 
 * PT 3:
 * 2. academic performance
-*mi xeq 1/ 5: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 * 3. fully specified
-*mi xeq 1/ 5: mixed pocschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
-mi est, dots post: mixed pocschoolprop inquiryprop readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
 
 log close
 
@@ -103,11 +96,6 @@ log using "logs/robust_narrowibl_mi5_linear_101019.smcl", replace
 ** -----------------------------------------------------
 ** 2. ALTERNATIVE MEASURES II: NARROW DICTIONARIES OF IBL
 ** -----------------------------------------------------
-
-inquiry_full_log):
-    A. Seed dictionary with 5 terms (inquiry_seed_log)
-    B. Narrow dictionary with 20 terms (inquiry_narrow_log)
-    C. Full dictionary without "hands-on" term = 49 terms (inquiry_full_nohands_log)
 
 *
 * 2A. RE-RUN LINEAR MIXED MODELS USING SEED IBL DICTIONARY (5 TERMS)
@@ -235,35 +223,35 @@ mi xeq: drop if readlevel15 != 1 | mathlevel15 != 1
 
 * PT 1:
 * 0. controls only
-mi est, dots: mixed inquiryprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 1. school poverty
-mi est, dots: mixed inquiryprop povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
-mi est, dots: mixed inquiryprop pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
-mi est, dots: mixed inquiryprop povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 4. school district race
-mi est, dots: mixed inquiryprop pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
 mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed povertyschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 0. controls only
 mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed pocschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
 
@@ -277,35 +265,35 @@ mi xeq: drop if inquiry_full_count > 10000
 
 * PT 1:
 * 0. controls only
-mi est, dots: mixed inquiryprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 1. school poverty
-mi est, dots: mixed inquiryprop povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
-mi est, dots: mixed inquiryprop pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
-mi est, dots: mixed inquiryprop povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 4. school district race
-mi est, dots: mixed inquiryprop pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
 mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed povertyschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 0. controls only
 mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed pocschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
 
@@ -320,35 +308,35 @@ mi xeq: drop if numwords < 10
 
 * PT 1:
 * 0. controls only
-mi est, dots: mixed inquiryprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 1. school poverty
-mi est, dots: mixed inquiryprop povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
-mi est, dots: mixed inquiryprop pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
-mi est, dots: mixed inquiryprop povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 4. school district race
-mi est, dots: mixed inquiryprop pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
 mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed povertyschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 0. controls only
 mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed pocschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
 
@@ -362,35 +350,35 @@ mi xeq: drop if numpages > 100
 
 * PT 1:
 * 0. controls only
-mi est, dots: mixed inquiryprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 1. school poverty
-mi est, dots: mixed inquiryprop povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
-mi est, dots: mixed inquiryprop pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
-mi est, dots: mixed inquiryprop povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 4. school district race
-mi est, dots: mixed inquiryprop pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
 mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed povertyschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 0. controls only
 mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed pocschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
 
@@ -404,34 +392,34 @@ mi xeq: drop if students < 10
 
 * PT 1:
 * 0. controls only
-mi est, dots: mixed inquiryprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 1. school poverty
-mi est, dots: mixed inquiryprop povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
-mi est, dots: mixed inquiryprop pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
-mi est, dots: mixed inquiryprop povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 4. school district race
-mi est, dots: mixed inquiryprop pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
 mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed povertyschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed povertyschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || geodistrict: , 
 
 * PT 3:
 * 0. controls only
 mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 * 1. IBL
-mi est, dots: mixed pocschoolprop inquiryprop primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
 mi est, dots: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiryprop readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
+mi est, dots: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || state: || geodistrict: , 
 
 log close
