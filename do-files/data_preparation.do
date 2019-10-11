@@ -1,16 +1,14 @@
 ***---------------------------------------------------------------
-*** CHARTER SCHOOL ANALYSIS SET-UP DO-FILE
+*** CHARTER SCHOOL ANALYSIS DATA PREPARATION DO-FILE
 ***
 *** Author: Jaren Haber, PhD Candidate
 *** URL: https://github.com/URAP-charter/sorting-schools-2019
 *** Institution: University of California, Berkeley
 *** Project: Charter school identities
-***
 *** Date created: January 3, 2019
-*** Date modified: October 10, 2019
 ***
-*** Description: Prepares data for analysis by modifying variables,
-*** performing multiple imputation, and saving data set for later use.
+*** Description: Prepares data for analysis by modifying variables--
+*** especially academic test scores from blurred data--and saving data set for later use.
 ***---------------------------------------------------------------
 
 * Install package for labeling multiple variables at once:
@@ -19,7 +17,7 @@ ssc install labvars, replace
 * Specify current directory:
 cd "/hdir/0/jhaber/Projects/charter_data/stats_team/"
 
-log using "logs/charter_setup_mi5_101019.smcl", replace
+log using "logs/data_preparation_101019.smcl", replace
 
 * Import data:
 import delimited data/charters_stats_2015_v2a_counts_inqnew.csv, clear 
@@ -480,23 +478,20 @@ replace mathlevel15 = 50 if math50 != .
 * Use "None" to cluster missing CMOs:
 replace cmoname = "None" if missing(cmoname)
 
+* Replace with missing any remaining odd codes:
+replace pocschoolcount = . if pocschoolcount==-12 | pocschoolcount==-54
+
 * Drop if missing level variables or inquiry/discipline variables:
 drop if missing(primary) | missing(middle) | missing(high) | missing(otherlevel)
 drop if missing(inquiry_full_log) | missing(numwords) | numwords < 10
 drop if missing(pocschoolcount)
 
-* Replace with missing any remaining odd codes:
-replace pocschoolcount = . if pocschoolcount==-12 | pocschoolcount==-54
-
-* Drop vars we don't impute directly
-drop povertyschoolcount
-
-* Convert number PDF pages to percentage:
-gen pctpdfs = numpdfs/numpages
-
 * Convert CMO and state variables into numeric with labels:
 encode cmoname, gen(cmonum)
 encode state, gen(statenum)
+
+* Convert number PDFs to a percentage:
+gen pctpdfs = numpdfs/numpages
 
 * Revised teacher count to later create student/teacher ratio:
 gen teachers = teachersccd if teachersccd != .
@@ -507,126 +502,7 @@ gen lnage = ln(age)
 gen lnstudents = ln(students)
 gen lnteachers = ln(teachers)
 
-* Make original zeros hard-missing (.z), this way they won't be imputed and can be restored later:
-replace lnage = .z if lnage==. & age!=.
-replace lnstudents = .z if lnstudents==. & students!=.
-replace lnteachers = .z if lnteachers==. & teachers!=.
-
-drop if missing(pocschoolcount)
-
-
-** -----------------------------------------------------
-** PERFORM MULTIPLE IMPUTATION 
-** -----------------------------------------------------
-
-* Look at variables missing cases:
-*mvpatterns inquiry_seed_log inquiry_narrow_log inquiry_full_log inquiry_full_nohands_log povertyschool pocschool povertysd pocsd primary middle high otherlevel age students urban cmo titlei readall13 readall14 readall15 mathall13 mathall14 mathall15 expulsions suspensions incidents lawreferrals lepratio disabledratio approgram teachers teacherratio certcount certrate
-
-/* List of vars to impute, both those used in models and those that help with multiple imputation:
-* School students and controls:
-povertyschoolcount pocschoolcount lepcount disabledcount students primary middle high otherlevel age urban titlei cmo
-* School quality/discipline:
-readall13 readall14 readall15 mathall13 mathall14 mathall15 teachers certcount suspensions expulsions incidents lawreferrals
-* School district level (add publicdensity charterdensity ??)
-povertysd pocsd childpovertysd collegesd popdensity unemployment foreignborn closerate publicdensity
-*/
-
-* Declare MI data using memory-efficient style best-suited to modifying variables (rather than cases):
-mi set mlong
-
-* Register as imputed those variables missing any cases:
-mi register imputed lnage lnstudents lnteachers readall13 readall14 readall15 mathall13 mathall14 mathall15 povertyschool povertysd pocsd readlevel13 readlevel14 readlevel15 mathlevel13 mathlevel14 mathlevel15
-
-* Register as regular those vars with complete observations (may be used to help in imputation equations):
-mi register regular closerate publicdensity charterdensity urban titlei ///
-cmo cmonum state statenum geodistrict numwords numpages numpdfs ///
-inquiry_seed_count inquiry_seed_prop inquiry_seed_log inquiry_narrow_count inquiry_narrow_prop inquiry_narrow_log ///
-inquiry_full_count inquiry_full_prop inquiry_full_log inquiry_full_nohands_count inquiry_full_nohands_prop inquiry_full_nohands_log ///
-traditional_prop progressive_prop ///
-pocschool pocschoolcount ///
-ethnicisolated99 ethnicisolated95 ethnicisolated90 ethnicisolated80 ethnicisolated70
-
-mi register passive pctpdfs
-
-* For reproducibility, set random seed:
-set seed 43
-* Increase maximum variable limit:
-set matsize 5000
-
-* Execute multiple implementation:
-mi impute chained ///
-///
-(pmm, knn(5) omit(i.readlevel13 i.readlevel14 i.readlevel15 i.mathlevel13 i.mathlevel14 i.mathlevel15 lnstudents lnteachers readall13 readall14 readall15 mathall13 mathall14 mathall15)) ///
-povertyschool ///
-/// 
-(pmm, knn(5) omit(lnstudents i.readlevel13 i.readlevel14 i.readlevel15 i.mathlevel13 i.mathlevel14 i.mathlevel15 mathall13 mathall14 mathall15)) ///
-povertysd ///
-///
-(pmm, knn(5) omit(i.readlevel13 i.readlevel14 i.readlevel15 i.mathlevel13 i.mathlevel14 i.mathlevel15 lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-pocsd ///
-///
-(pmm, knn(5)) lnage ///
-///
-(pmm, knn(5) omit(lnstudents lnteachers)) ///
-readall13 ///
-///
-(pmm, knn(5) omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 lnteachers)) ///
-mathall13 ///
-///
-(pmm, knn(5) omit(lnstudents lnteachers)) ///
-readall14 ///
-///
-(pmm, knn(5) omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 lnteachers)) ///
-mathall14 ///
-///
-(pmm, knn(5) omit(lnstudents lnteachers)) ///
-readall15 ///
-///
-(pmm, knn(5) omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 lnteachers)) ///
-mathall15 ///
-///
-(pmm, knn(5) omit(lnage povertysd pocsd readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers i.readlevel13 i.readlevel14 i.readlevel15 i.mathlevel13 i.mathlevel14 i.mathlevel15)) ///
-lnstudents ///
-///
-(pmm, knn(5) omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15)) ///
-lnteachers ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-readlevel13 ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-mathlevel13 ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-readlevel14 ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-mathlevel14 ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-readlevel15 ///
-///
-(ologit, omit(lnage povertysd pocsd lnstudents readall13 readall14 readall15 mathall13 mathall14 mathall15 lnteachers)) ///
-mathlevel15 ///
-///
-///
-= numpdfs numwords numpages pocschoolcount ///
-inquiry_full_prop traditional_prop progressive_prop ///
-closerate publicdensity charterdensity ///
-i.urban statenum cmonum geodistrict, ///
-add(5) rseed(43) dots augment
-
-
-** -----------------------------------------------------
-** FINALIZE & SAVE DATA
-** -----------------------------------------------------
-
-* Recover variables using imputed natural-logarithmic versions:
-replace age = exp(lnage)
-replace students = exp(lnstudents)
-replace teachers = exp(lnteachers) 
-
-* Rescale SD & academic variables so commensurate with dichotomous variables:
+* Rescale SD & academic variables so on same scale as dichotomous (0/1) variables:
 replace pocsd = pocsd/100
 replace povertysd = povertysd/100
 replace readall13 = readall13/100
@@ -636,31 +512,18 @@ replace mathall14 = mathall14/100
 replace readall15 = readall15/100
 replace mathall15 = mathall15/100
 
-* Recreate any original zeros, which were replaced with .z after log transformation: 
-replace age = 0 if lnage==.z & age!=.
-replace students = 0 if lnstudents==.z & students!=.
-replace teachers = 0 if lnteachers==.z & teachers!=.
 
-* Create new passive variables within MI (can use defaults because using mlong style):
-gen povertyschoolprop = povertyschool/100
-gen povertyschoolcount = round(povertyschool/100 * students)
-gen teacherratio = students/teachers
-gen upperlevel = middle + high + otherlevel
-gen pocschoolprop = pocschoolcount/students
-mi register passive povertyschoolcount upperlevel teacherratio pocschoolprop povertyschoolprop
-
-* Drop if still missing key variables:
-quietly mi xeq 1 / 5: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
-quietly mi xeq 1 / 5: drop if missing(pocschool) | missing(povertyschoolcount)
+** -----------------------------------------------------
+** FINALIZE & SAVE DATA
+** -----------------------------------------------------
 
 * Label variables: 
-* disciplinecount "FD emphasis (#)" disciplineprop "FD emphasis (%)"
 labvars inquiry_seed_count "Emphasis: IBL seed (#)" inquiry_seed_prop "Emphasis: IBL seed (%)" inquiry_seed_log "Emphasis: IBL seed (logged ratio)" ///
 inquiry_narrow_count "Emphasis: IBL narrow (#)" inquiry_narrow_prop "Emphasis: IBL narrow (%)" inquiry_narrow_log "Emphasis: IBL narrow (logged ratio)" ///
 inquiry_full_count "Emphasis: IBL full (#)" inquiry_full_prop "Emphasis: IBL full (%)" inquiry_full_log "Emphasis: IBL full (logged ratio)" ///
 inquiry_full_nohands_count "Emphasis: IBL full w/o hands-on (#)" inquiry_full_nohands_prop "Emphasis: IBL full w/o hands-on (%)" inquiry_full_nohands_log "Emphasis: IBL full w/o hands-on (logged ratio)" ///
-pocschool "% students of color (school)" pocschoolprop "% students of color (school)" pocschoolcount "# students of color" ///
-povertyschool "% students in poverty (school)" povertyschoolprop "% students in poverty (school)"  povertyschoolcount "# students in poverty" ///
+pocschool "% students of color (school)" pocschoolcount "# students of color" ///
+povertyschool "% students in poverty (school)" povertyschoolcount "# students in poverty" ///
 pocsd "% people of color (school district)" povertysd "% people in poverty (school district)" ///
 cmoname "CMO" state "State" geodistrict "School district" ///
 readall13 "% proficiency in RLA 2013-14" readall14 "% proficiency in RLA 2014-15" readall15 "% proficiency in RLA 2015-16" ///
@@ -673,10 +536,10 @@ urban "Urban locale" pctpdfs "% PDF pages" numwords "# words", ///
 alternate
 
 
-* Save data to disk
+* Save data to disk, indicate not yet imputed:
 cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
-save "data/charter_schools_data_5_imputations.dta", replace
-export delimited using "data/charter_schools_data_5_imputations.csv", replace
+save "data/charter_schools_data_no_imputations.dta", replace
+export delimited using "data/charter_schools_data_no_imputations.csv", replace
 
 log close
-translate "logs/charter_setup_mi5_101019.smcl" "logs/data_preparation_5_imputations.pdf"
+translate "../stats_team/logs/data_preparation_101019.smcl" "logs/data_preparation.pdf"
