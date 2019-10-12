@@ -154,7 +154,7 @@ gen povertyschoolcount = round(povertyschool/100 * students)
 gen teacherratio = students/teachers
 gen upperlevel = middle + high + otherlevel
 gen pocschoolprop = pocschoolcount/students
-mi register passive pctpdfs povertyschoolprop povertyschoolcount teacherratio upperlevel pocschoolprop
+mi register passive povertyschoolprop povertyschoolcount teacherratio upperlevel pocschoolprop
 
 * Drop if still missing key variables:
 quietly mi xeq 1 / 100: drop if missing(students) | missing(lnstudents) | students==0 | lnstudents==.z
