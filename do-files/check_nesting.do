@@ -85,7 +85,7 @@ mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall15 mathall15
 mi xeq 1 / 5: quietly mixed pocschoolcount primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 
 mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log prop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
