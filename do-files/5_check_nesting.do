@@ -90,7 +90,7 @@ mi xeq 1: quietly xtmixed pocschoolprop readall15 mathall15 primary middle high 
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 log close
-translate "logs/nesting_mi_linear_101019.smcl" "logs/nesting_mi_linear_101019.pdf"
+translate "logs/nesting_mi_linear_101019.smcl" "logs/nesting.pdf"
 
 
 log using "logs/results_quickpass_mi100_linear_clusts_101019.smcl", replace
@@ -136,7 +136,7 @@ mi xeq 1: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnst
 mi xeq 1: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 
 log close
-translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/results_quickpass_mi100_linear_clusts_101019.pdf"
+translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/mixed_output_fully_nested_quick.pdf"
 
 
 log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
@@ -193,7 +193,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
-translate "logs/results_1_ibl_mi100_linear_clusts_101019.smcl" "logs/results_1_ibl_mi100_linear_clusts_101019.pdf"
+translate "logs/results_1_ibl_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt1_IBL_fully_nested.pdf"
 
 
 log using "logs/results_2_schpov_mi100_linear_clusts_101019.smcl", replace
@@ -240,7 +240,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_clusts_101019.smcl" "logs/results_2_schpov_mi100_linear_clusts_101019.pdf"
+translate "logs/results_2_schpov_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt2_schpov_fully_nested.pdf"
 
 
 log using "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl", replace
@@ -284,4 +284,4 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl" "logs/results_3_schpoc_mi100_linear_clusts_101019.pdf"
+translate "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt3_schpoc_fully_nested.pdf"
