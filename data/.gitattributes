@@ -1,0 +1,2 @@
+charter_schools_data_100_imputations.csv filter=lfs diff=lfs merge=lfs -text
+charter_schools_data_100_imputations.dta filter=lfs diff=lfs merge=lfs -text
