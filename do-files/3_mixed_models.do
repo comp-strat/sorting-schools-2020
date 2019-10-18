@@ -101,7 +101,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
-translate "logs/results_1_ibl_mi100_linear_101019.smcl" "logs/results_1_ibl_mi100_linear_101019.pdf"
+translate "logs/results_1_ibl_mi100_linear_101019.smcl" "logs/mixed_output_pt1_inquiry_based_learning.pdf"
 
 
 log using "logs/results_2_schpov_mi100_linear_101019.smcl", replace
@@ -158,7 +158,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_101019.smcl" "logs/results_2_schpov_mi100_linear_101019.pdf"
+translate "logs/results_2_schpov_mi100_linear_101019.smcl" "logs/mixed_output_pt2_students_poverty.pdf"
 
 
 log using "logs/results_3_schpoc_mi100_linear_101019.smcl", replace
@@ -215,4 +215,4 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_3_schpoc_mi100_linear_101019.smcl" "logs/results_3_schpoc_mi100_linear_101019.pdf"
+translate "logs/results_3_schpoc_mi100_linear_101019.smcl" "logs/mixed_output_pt3_students_of_color.pdf"
