@@ -75,8 +75,8 @@ mi xeq 1 / 5: quietly mixed povertyschoolprop primary middle high age students u
 
 mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1: quietly xtmixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 
 ** NESTING IN MIXED-EFFECTS LINEAR MODELS PT 3: IBL, ACADEMICS -> RACE
@@ -86,8 +86,8 @@ mi xeq 1 / 5: quietly mixed pocschoolcount primary middle high age students urba
 
 mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1: quietly xtmixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 log close
 translate "logs/nesting_mi_linear_101019.smcl" "logs/nesting.pdf"
@@ -119,9 +119,9 @@ mi xeq 1: mixed povertyschoolprop primary middle high lnage lnstudents urban || 
 * 1. IBL
 mi xeq 1: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 * 2. academic performance
-mi xeq 1 : mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi xeq 1 : mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 * 3. fully specified
-mi xeq 1 : mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi xeq 1 : mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 
 
 ** FULLY NESTED MIXED-EFFECTS LINEAR MODELS PT 3: IBL, ACADEMICS -> RACE
@@ -131,9 +131,9 @@ mi xeq 1: mixed pocschoolprop primary middle high lnage lnstudents urban || _all
 * 1. IBL
 mi xeq 1: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 * 2. academic performance
-mi xeq 1: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi xeq 1: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 * 3. fully specified
-mi xeq 1: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi xeq 1: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 
 log close
 translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/mixed_output_fully_nested_quick.pdf"
@@ -222,8 +222,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
 
 * 2. academic performance
-*mi xeq 1 / 5: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-mi est, dots post: mixed povertyschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+*mi xeq 1 / 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov2
 est save "models/2c_schpov_acad_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2c_schpov_acad_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
@@ -231,8 +231,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M2: Academic proficiency")
 
 * 3. fully specified
-*mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-mi est, dots post: mixed povertyschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+*mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov3
 est save "models/2d_schpov_full_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2d_schpov_full_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
@@ -269,14 +269,14 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
 
 * 2. academic performance
-*mi xeq 1: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-mi est, dots post: mixed pocschoolprop readall15 mathall15 primary middle high lnage lnstudents urban readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+*mi xeq 1: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc2
 est save "models/3c_schpoc_acad_mi100_linear_clusts.ster", replace
 
 * 3. fully specified
-*mi xeq 1: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-mi est, dots post: mixed pocschoolprop inquiry_full_log readall15 mathall15 primary middle high lnage lnstudents urban pctpdfs readlevel15 mathlevel15 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+*mi xeq 1: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc3
 est save "models/3d_schpoc_full_mi100_linear_clusts.ster", replace
 outreg2 using "tables/3d_schpoc_full_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
