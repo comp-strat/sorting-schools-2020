@@ -530,7 +530,7 @@ readall13 "% proficiency in RLA 2013-14" readall14 "% proficiency in RLA 2014-15
 mathall13 "% proficiency in math 2013-14" mathall14 "% proficiency in math 2014-15" mathall15 "% proficiency in math 2015-16" ///
 readlevel13 "RLA blurring 2013-14" readlevel14 "RLA blurring 2014-15" readlevel15 "RLA blurring 2015-16" ///
 mathlevel13 "Math blurring 2013-14" mathlevel14 "Math blurring 2014-15" mathlevel15 "Math blurring 2015-16" ///
-primary "Primary school (binary)" middle "Primary school (binary)" high "Primary school (binary)" otherlevel "Primary school (binary)" ///
+primary "Primary school (binary)" middle "Middle school (binary)" high "High school (binary)" otherlevel "Other level (binary)" ///
 age "Years open" lnage "Years open (log)" students "# students" lnstudents "# students (log)" teachers "# teachers" lnteachers "# teachers (log)" ///
 urban "Urban locale" pctpdfs "% PDF pages" numwords "# words", ///
 alternate
