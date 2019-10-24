@@ -42,7 +42,7 @@ log using "logs/nesting_mi_linear_101019.smcl", replace
 * Check nesting without crossed random effects (less accurate):
 mi xeq 1 / 5: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 
-* Compare rho for full IBL dictionary (50 terms) from each of five imputations, using mixed linear models:
+* Compare rho for full IBL dictionary (50 terms) from each of five imputations, do both CMO x state and state x CMO:
 mi xeq 1 / 5: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1 / 5: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
 * Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
@@ -73,7 +73,10 @@ mi xeq 1: quietly xtmixed inquiry_full_nohands_log primary middle high lnage lns
 * Check nesting without crossed random effects (less accurate):
 mi xeq 1 / 5: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 
-mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Compare rho from each of five imputations, do both CMO x state and state x CMO:
+mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
 mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
@@ -84,7 +87,10 @@ mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall14 mathall14
 * Check nesting without crossed random effects (less accurate):
 mi xeq 1 / 5: quietly mixed pocschoolcount primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 
-mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Compare rho from each of five imputations, do both CMO x state and state x CMO:
+mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
@@ -149,6 +155,8 @@ log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
 *mi xeq 1 / 5: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl0
+
+** RUN HERE
 est save "model_estimates/1a_ibl_controls_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1a_ibl_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
