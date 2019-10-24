@@ -541,5 +541,15 @@ cd "/hdir/0/jhaber/Projects/charter_data/sorting-schools-2019/"
 save "data/charter_schools_data_no_imputations.dta", replace
 export delimited using "data/charter_schools_data_no_imputations.csv", replace
 
+* Get stats:
+mi xeq 1: asdoc tabstat inquiry_full_log readall14 mathall14 povertyschoolprop pocschoolprop povertysd pocsd primary middle high otherlevel ///
+lnage lnstudents urban pctpdfs numwords readlevel14 mathlevel14, ///
+stat(mean median sd) save(tables/stats.rtf) replace dec(3) tzok
+
+* Create correlation table using first imputation:
+mi xeq 1: asdoc pwcorr inquiry_full_log readall14 mathall14 povertyschoolprop pocschoolprop povertysd pocsd primary middle high otherlevel ///
+lnage lnstudents urban pctpdfs numwords readlevel14 mathlevel14, ///
+sig star(.01) save(tables/correlations.rtf) replace dec(2) tzok
+
 log close
 translate "../stats_team/logs/data_preparation_101019.smcl" "logs/data_preparation.pdf"
