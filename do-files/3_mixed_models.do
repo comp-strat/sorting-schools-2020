@@ -50,6 +50,7 @@ log using "logs/results_1_ibl_mi100_linear_101019.smcl", replace
 
 * 0. controls only
 mi xeq 1 / 5: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi xeq 1: quietly mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 est store ibl0
 ereturn list
@@ -62,6 +63,7 @@ ctitle("M0: Controls only")
 
 * 1. school poverty
 mi xeq 1 / 5: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi xeq 1: quietly mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 est store ibl1
 ereturn list
@@ -72,6 +74,7 @@ ctitle("M1: School poverty")
 
 * 2. school race
 mi xeq 1 / 5: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi xeq 1: quietly mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 est store ibl2
 ereturn list
@@ -82,6 +85,7 @@ ctitle("M2: School race")
 
 * 3. school district poverty
 mi xeq 1 / 5: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi xeq 1: quietly mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 est store ibl3
 ereturn list
@@ -92,6 +96,7 @@ ctitle("M3: School district poverty")
 
 * 4. school district race
 mi xeq 1 / 5: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+mi xeq 1: quietly mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 est store ibl4
 ereturn list
@@ -104,7 +109,7 @@ log close
 translate "logs/results_1_ibl_mi100_linear_101019.smcl" "logs/mixed_output_pt1_inquiry_based_learning.pdf"
 
 
-log using "logs/results_2_schpov_mi100_linear_101019.smcl", replace
+log using "logs/results_2_schpov_mi100_linear_102419.smcl", replace
 ** -----------------------------------------------------
 ** MIXED-EFFECTS LINEAR MODELS PT 2: IBL, ACADEMICS -> POVERTY
 ** -----------------------------------------------------
@@ -117,6 +122,7 @@ log using "logs/results_2_schpov_mi100_linear_101019.smcl", replace
 
 * 0. controls only
 mi xeq 1 / 5: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
+mi xeq 1: quietly mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
 est store pov0
 ereturn list
@@ -129,6 +135,7 @@ ctitle("M0: Controls only")
 
 * 1. IBL
 mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+mi xeq 1: quietly mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
 est store pov1
 ereturn list
@@ -139,6 +146,7 @@ ctitle("M1: IBL emphasis")
 
 * 2. academic performance
 mi xeq 1 / 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+mi xeq 1: quietly mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
 est store pov2
 ereturn list
@@ -149,6 +157,7 @@ ctitle("M2: Academic proficiency")
 
 * 3. fully specified
 mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+mi xeq 1: quietly mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
 est store pov3
 ereturn list
@@ -158,7 +167,7 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_101019.smcl" "logs/mixed_output_pt2_students_poverty.pdf"
+translate "logs/results_2_schpov_mi100_linear_102419.smcl" "logs/mixed_output_pt2_students_poverty.pdf"
 
 
 log using "logs/results_3_schpoc_mi100_linear_101019.smcl", replace
@@ -174,6 +183,7 @@ log using "logs/results_3_schpoc_mi100_linear_101019.smcl", replace
 
 * 0. controls only
 mi xeq 1 / 5: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
+mi xeq 1: quietly mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
 est store poc0
 ereturn list
@@ -186,6 +196,7 @@ ctitle("M0: Controls only")
 
 * 1. IBL
 mi xeq 1 / 5: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+mi xeq 1: quietly mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 est store poc1
 ereturn list
@@ -196,6 +207,7 @@ ctitle("M1: IBL emphasis")
 
 * 2. academic performance
 mi xeq 1 / 5: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+mi xeq 1: quietly mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 est store poc2
 ereturn list
@@ -206,6 +218,7 @@ ctitle("M2: Academic proficiency")
 
 * 3. fully specified
 mi xeq 1 / 5: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+mi xeq 1: quietly mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , nolog ; estat ic ; estat icc
 mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
 est store poc3
 ereturn list
