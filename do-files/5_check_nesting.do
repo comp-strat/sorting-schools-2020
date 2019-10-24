@@ -12,7 +12,7 @@
 *** school and community class & race on ed. ideology, and effects of ideology and academics on race & class student composition.
 ***---------------------------------------------------------------
 
-/* NOTES ON PARAMETERS:
+/* NOTES ON PARAMETERS:mode
 More robust specification: intmethod(mvaghermite)
 How to calculate rho by hand: e(sigma_u)^2/(e(sigma_u)^2+e(sigma_e)^2)
 Useful stats to include in outreg2--but doesn't work with MI:
@@ -149,7 +149,7 @@ log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
 *mi xeq 1 / 5: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl0
-est save "models/1a_ibl_controls_mi100_linear_clusts.ster", replace
+est save "model_estimates/1a_ibl_controls_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1a_ibl_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 addnote("", "Sources: American Community Survey 2012-16 (U.S. Census Bureau 2018), Common Core of Data 2015-16 (NCES 2018), and the author's data collection.") ///
@@ -160,7 +160,7 @@ ctitle("M0: Controls only")
 *mi xeq 1 / 5: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl1
-est save "models/1b_ibl_povsch_mi100_linear_clusts.ster", replace
+est save "model_estimates/1b_ibl_povsch_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1b_ibl_povsch_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: School poverty")
@@ -169,7 +169,7 @@ ctitle("M1: School poverty")
 *mi xeq 1 / 5: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl2
-est save "models/1c_ibl_pocsch_mi100_linear_clusts.ster", replace
+est save "model_estimates/1c_ibl_pocsch_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1c_ibl_pocsch_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M2: School race")
@@ -178,7 +178,7 @@ ctitle("M2: School race")
 *mi xeq 1 / 5: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl3
-est save "models/1d_ibl_povsd_mi100_linear_clusts.ster", replace
+est save "model_estimates/1d_ibl_povsd_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1d_ibl_povsd_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: School district poverty")
@@ -187,7 +187,7 @@ ctitle("M3: School district poverty")
 *mi xeq 1 / 5: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store ibl4
-est save "models/1e_ibl_pocsd_mi100_linear_clusts.ster", replace
+est save "model_estimates/1e_ibl_pocsd_mi100_linear_clusts.ster", replace
 outreg2 using "tables/1e_ibl_pocsd_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
@@ -205,7 +205,7 @@ log using "logs/results_2_schpov_mi100_linear_clusts_101019.smcl", replace
 *mi xeq 1 / 5: mixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov0
-est save "models/2a_schpov_controls_mi100_linear_clusts.ster", replace
+est save "model_estimates/2a_schpov_controls_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2a_schpov_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 addnote("", "Sources: American Community Survey 2012-16 (U.S. Census Bureau 2018), Common Core of Data 2015-16 (NCES 2018), EdFacts Achievement Results for State Assessments (USDE 2018), and the author's data collection.") ///
@@ -216,7 +216,7 @@ ctitle("M0: Controls only")
 *mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov1
-est save "models/2b_schpov_ibl_mi100_linear_clusts.ster", replace
+est save "model_estimates/2b_schpov_ibl_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2b_schpov_ibl_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
@@ -225,7 +225,7 @@ ctitle("M1: IBL emphasis")
 *mi xeq 1 / 5: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov2
-est save "models/2c_schpov_acad_mi100_linear_clusts.ster", replace
+est save "model_estimates/2c_schpov_acad_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2c_schpov_acad_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M2: Academic proficiency")
@@ -234,7 +234,7 @@ ctitle("M2: Academic proficiency")
 *mi xeq 1 / 5: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store pov3
-est save "models/2d_schpov_full_mi100_linear_clusts.ster", replace
+est save "model_estimates/2d_schpov_full_mi100_linear_clusts.ster", replace
 outreg2 using "tables/2d_schpov_full_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
@@ -252,7 +252,7 @@ log using "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl", replace
 *mi xeq 1 / 5: mixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc0
-est save "models/3a_schpoc_controls_mi100_linear_clusts.ster", replace
+est save "model_estimates/3a_schpoc_controls_mi100_linear_clusts.ster", replace
 outreg2 using "tables/3a_schpoc_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 addnote("", "Sources: American Community Survey 2012-16 (U.S. Census Bureau 2018), Common Core of Data 2015-16 (NCES 2018), EdFacts Achievement Results for State Assessments (USDE 2018), and the author's data collection.") ///
@@ -263,7 +263,7 @@ ctitle("M0: Controls only")
 *mi xeq 1 / 5: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc1
-est save "models/3b_schpoc_ibl_mi100_linear_clusts.ster", replace
+est save "model_estimates/3b_schpoc_ibl_mi100_linear_clusts.ster", replace
 outreg2 using "tables/3b_schpoc_ibl_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M1: IBL emphasis")
@@ -272,13 +272,13 @@ ctitle("M1: IBL emphasis")
 *mi xeq 1: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc2
-est save "models/3c_schpoc_acad_mi100_linear_clusts.ster", replace
+est save "model_estimates/3c_schpoc_acad_mi100_linear_clusts.ster", replace
 
 * 3. fully specified
 *mi xeq 1: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 mi est, dots post: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 est store poc3
-est save "models/3d_schpoc_full_mi100_linear_clusts.ster", replace
+est save "model_estimates/3d_schpoc_full_mi100_linear_clusts.ster", replace
 outreg2 using "tables/3d_schpoc_full_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
 alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
