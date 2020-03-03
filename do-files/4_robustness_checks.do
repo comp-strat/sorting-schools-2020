@@ -38,9 +38,10 @@ mi update
     A. precise academic data: readlevel14 & mathlevel14 == 1
     B. above-average district poverty
     C. above-average district POC
-    D. inquiry_full_count < 10000
-    E. numpages < 100
-    F. students > 10
+    D. above-average district population density
+    E. inquiry_full_count < 10000
+    F. numpages < 100
+    G. students > 10
     
 */
 
@@ -318,9 +319,7 @@ mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban 
 mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 2. school race
 mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 3. school district poverty
-mi xeq 0 1 2: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 4. school district race
+* 3. school district race
 mi xeq 0 1 2: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
@@ -370,8 +369,6 @@ mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lns
 mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 * 3. school district poverty
 mi xeq 0 1 2: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
-* 4. school district race
-mi xeq 0 1 2: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
 
 * PT 2: 
 * 0. controls only
@@ -401,9 +398,58 @@ translate "logs/robust_filtpoc_mi5_linear_030220.smcl" "logs/robustness_check_hi
 use "data/charter_schools_data_5_imputations.dta", clear
 mi update
 
+log using "logs/robust_filtdensity_mi5_linear_030220.smcl", replace
+*
+* 4D. FILTERED DATA: DISTRICTS WITH ABOVE-AVERAGE POPULATION DENSITY
+*
+
+egen popdensitymean = mean(popdensity)
+
+drop if popdensity < popdensitymean
+
+* PT 1:
+* 0. controls only
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 1. school poverty
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 2. school race
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 3. school district poverty
+mi est, dots: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 4. school district race
+mi est, dots: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+
+* PT 2: 
+* 0. controls only
+mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+* 2. academic performance
+mi est, dots: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+* 3. fully specified
+mi est, dots: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+
+* PT 3:
+* 0. controls only
+mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+* 2. academic performance
+mi est, dots: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+* 3. fully specified
+mi est, dots: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+
+log close
+translate "logs/robust_filtdensity_mi5_linear_030220.smcl" "logs/robustness_check_high_density_districts.pdf"
+
+
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
+
 log using "logs/robust_filtibl_mi5_linear_101019.smcl", replace
 *
-* 4D. FILTERED DATA: REMOVING HUGE WEBSITE OUTLIERS
+* 4E. FILTERED DATA: REMOVING HUGE WEBSITE OUTLIERS
 *
 
 mi xeq: drop if inquiry_full_count > 10000
@@ -450,7 +496,7 @@ mi update
 
 log using "logs/robust_filtnumpages_mi5_linear_101019.smcl", replace
 *
-* 4E. FILTERED DATA: NUMBER PAGES
+* 4F. FILTERED DATA: NUMBER PAGES
 *
 
 mi xeq: drop if numpages > 100
@@ -497,7 +543,7 @@ mi update
 
 log using "logs/robust_filtstudents_mi5_linear_101019.smcl", replace
 *
-* 4F. FILTERED DATA: SCHOOL SIZE (# STUDENTS)
+* 4G. FILTERED DATA: SCHOOL SIZE (# STUDENTS)
 *
 
 mi xeq: drop if students < 10
