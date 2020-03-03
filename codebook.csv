@@ -1,6 +1,16 @@
 ﻿Variable name,Description,Used in analysis,Data source/basis,Variable type
-inquirycount,# of words on school's website matching inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
-inquiryprop,% of words on school's website matching inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Ratio
+inquiry_seed_count,# of words on school's website matching 5-term seed inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
+inquiry_seed_prop,% of words on school's website matching 5-term seed inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Ratio
+inquiry_seed_log,logged % of words on school's website matching 5-term seed inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Log
+inquiry_narrow_count,# of words on school's website matching 20-term narrow inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
+inquiry_narrow_prop,% of words on school's website matching 20-term narrow inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Ratio
+inquiry_narrow_log,logged % of words on school's website matching 20-term narrow inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Log
+inquiry_full_count,# of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
+inquiry_full_prop,% of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Ratio
+inquiry_full_log,logged % of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Log
+inquiry_full_nohands_count,# of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Count
+inquiry_full_nohands_prop,% of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,no,Author,Ratio
+inquiry_full_nohands_log,logged % of words on school's website matching 50-term full inquiry-based learning (IBL) dictionary; 'ideological emphasis' on IBL,yes,Author,Log
 disciplinecount,# of words on school's website matching formal discipline (FD) dictionary; 'ideological emphasis' on FD,no,Author,Count
 disciplineprop,% of words on school's website matching formal discipline (FD) dictionary; 'ideological emphasis' on FD,no,Author,Ratio
 traditionalprop,% of words on school's website matching traditional learning dictionary; 'ideological emphasis' on traditionalism,no,Author,Ratio
