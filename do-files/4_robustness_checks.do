@@ -21,9 +21,9 @@ use "data/charter_schools_data_5_imputations.dta", clear
 mi update
 
 
-/* ROBUSTNESS CHECKS TO IMPLEMENT: 
+/* ROBUSTNESS CHECKS TO IMPLEMENT BY RE-RUNNING LINEAR MIXED MODELS FROM MAIN RESULTS: 
 
-1. Alternative Measures I: Lagged academic proficiency rates (instead of 2014-15) :
+1. Alternative Measures I: Lagged academic proficiency rates (instead of 2014-15):
     A. 2013-14 scores
     B. 2015-16 scores
 
@@ -32,11 +32,15 @@ mi update
     B. Narrow dictionary = 20 terms (inquiry_narrow_log)
     C. Full dictionary without "hands-on" term = 49 terms (inquiry_full_nohands_log)
 
-3. Filter Dataset: Restrict sample to only those schools with:
+3. Alternative Measures III: Race/class differentials between district and school
+
+4. Filter Dataset: Restrict sample to only those schools with:
     A. precise academic data: readlevel14 & mathlevel14 == 1
-    B. inquiry_full_count < 10000
-    C. numpages < 100
-    D. students > 10
+    B. above-average district poverty
+    C. above-average district POC
+    D. inquiry_full_count < 10000
+    E. numpages < 100
+    F. students > 10
     
 */
 
@@ -47,7 +51,7 @@ log using "logs/robust_laggedscores_mi5_linear_101019.smcl", replace
 ** -----------------------------------------------------
 
 *
-* 1A. RE-RUN LINEAR MIXED MODELS USING LAGGED ACADEMIC SCORES: 2013-14
+* 1A. LAGGED ACADEMIC SCORES: 2013-14
 *
 
 * PT 2: 
@@ -65,7 +69,7 @@ mi est, dots post: mixed pocschoolprop inquiry_full_log readall13 mathall13 prim
 
 
 *
-* 1B. RE-RUN LINEAR MIXED MODELS USING NOT-LAGGED ACADEMIC SCORES: 2015-16
+* 1B. NOT-LAGGED ACADEMIC SCORES: 2015-16
 *
 
 * PT 2: 
@@ -90,7 +94,7 @@ log using "logs/robust_narrowibl_mi5_linear_101019.smcl", replace
 ** -----------------------------------------------------
 
 *
-* 2A. RE-RUN LINEAR MIXED MODELS USING SEED IBL DICTIONARY (5 TERMS)
+* 2A. SEED IBL DICTIONARY (5 TERMS)
 *
 
 * PT 1:
@@ -127,7 +131,7 @@ mi est, dots: mixed pocschoolprop inquiry_seed_log readall14 mathall14 primary m
 
 
 *
-* 2B. RE-RUN LINEAR MIXED MODELS USING NARROW IBL DICTIONARY (20 TERMS)
+* 2B. NARROW IBL DICTIONARY (20 TERMS)
 *
 
 * PT 1:
@@ -164,7 +168,7 @@ mi est, dots: mixed pocschoolprop inquiry_narrow_log readall14 mathall14 primary
 
 
 *
-* 2C. RE-RUN LINEAR MIXED MODELS USING FULL IBL DICTIONARY WITHOUT "HANDS-ON" TERM (49 TERMS)
+* 2C. FULL IBL DICTIONARY WITHOUT "HANDS-ON" TERM (49 TERMS)
 *
 
 * PT 1:
@@ -203,13 +207,56 @@ log close
 translate "logs/robust_narrowibl_mi5_linear_101019.smcl" "logs/robustness_check_dictionary_size.pdf"
 
 
+log using "logs/robust_district_differentials_mi5_linear_120919.smcl", replace
+** -----------------------------------------------------
+** 3. ALTERNATIVE MEASURES III: RACE/CLASS DIFFERENTIALS BETWEEN SCHOOL AND DISTRICT (FULLY NESTED)
+** -----------------------------------------------------
+
+* Create differentials such that higher means school has LOWER poverty/POC density than does surrounding district:
+mi xeq: gen povertydiff = povertysd - povertyschoolprop
+mi xeq: gen pocdiff = pocsd - pocschoolprop
+
+* PT 1:
+* 0. controls only
+mi est, dots: mixed inquiry_seed_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 1. poverty differential
+mi est, dots: mixed inquiry_seed_log povertydiff primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 2. race differential
+mi est, dots: mixed inquiry_seed_log pocdiff primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , 
+
+* PT 2: 
+* 0. controls only
+mi est, dots: mixed povertydiff primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed povertydiff inquiry_seed_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 2. academic performance
+mi est, dots: mixed povertydiff readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 3. fully specified
+mi est, dots: mixed povertydiff inquiry_seed_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , 
+
+* PT 3:
+* 0. controls only
+mi est, dots: mixed pocdiff primary middle high lnage lnstudents urban || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed pocdiff inquiry_seed_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 2. academic performance
+mi est, dots: mixed pocdiff readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , 
+* 3. fully specified
+mi est, dots: mixed pocdiff inquiry_seed_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , 
+
+
+log close
+translate "logs/robust_district_differentials_mi5_linear_120919.smcl" "logs/robustness_check_district_differentials.pdf"
+
+
+
 log using "logs/robust_filtscores_mi5_linear_101019.smcl", replace
 ** -----------------------------------------------------
-** 3. RUN WITH FILTERED DATA
+** 4. RUN WITH FILTERED DATA
 ** -----------------------------------------------------
 
 *
-* 3A. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: PRECISE ACADEMIC DATA ONLY
+* 4A. FILTERED DATA: PRECISE ACADEMIC DATA ONLY
 *
 
 mi xeq: drop if readlevel14 != 1 | mathlevel14 != 1
@@ -254,9 +301,109 @@ translate "logs/robust_filtscores_mi5_linear_101019.smcl" "logs/robustness_check
 use "data/charter_schools_data_5_imputations.dta", clear
 mi update
 
+log using "logs/robust_filtpov_mi5_linear_030220.smcl", replace
+*
+* 4B. FILTERED DATA: DISTRICTS WITH ABOVE-AVERAGE POVERTY
+*
+
+egen povertysdmean = mean(povertysd)
+egen pocsdmean = mean(pocsd)
+
+drop if povertysd < povertysdmean
+
+* PT 1:
+* 0. controls only
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 1. school poverty
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 2. school race
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 3. school district poverty
+mi xeq 0 1 2: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 4. school district race
+mi xeq 0 1 2: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+
+* PT 2: 
+* 0. controls only
+mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+* 2. academic performance
+mi xeq 0 1 2: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+* 3. fully specified
+mi xeq 0 1 2: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+
+* PT 3:
+* 0. controls only
+mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+* 2. academic performance
+mi xeq 0 1 2: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+* 3. fully specified
+mi xeq 0 1 2: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+
+log close
+translate "logs/robust_filtpov_mi5_linear_030220.smcl" "logs/robustness_check_high_poverty_districts.pdf"
+
+
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
+
+log using "logs/robust_filtpoc_mi5_linear_030220.smcl", replace
+*
+* 4C. FILTERED DATA: DISTRICTS WITH ABOVE-AVERAGE POC
+*
+
+egen povertysdmean = mean(povertysd)
+egen pocsdmean = mean(pocsd)
+
+drop if pocsd < pocsdmean
+
+* PT 1:
+* 0. controls only
+mi est, dots: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 1. school poverty
+mi est, dots: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 2. school race
+mi est, dots: mixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 3. school district poverty
+mi xeq 0 1 2: mixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+* 4. school district race
+mi xeq 0 1 2: mixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || cmoname: , 
+
+* PT 2: 
+* 0. controls only
+mi est, dots: mixed povertyschoolprop primary middle high lnage lnstudents urban || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || geodistrict: , 
+* 2. academic performance
+mi xeq 0 1 2: mixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || geodistrict: , 
+* 3. fully specified
+mi xeq 0 1 2: mixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || geodistrict: , 
+
+* PT 3:
+* 0. controls only
+mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || state: || geodistrict: , 
+* 1. IBL
+mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
+* 2. academic performance
+mi est, dots: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+* 3. fully specified
+mi est, dots: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+
+log close
+translate "logs/robust_filtpoc_mi5_linear_030220.smcl" "logs/robustness_check_high_POC_districts.pdf"
+
+
+* Load original data for filtering:
+use "data/charter_schools_data_5_imputations.dta", clear
+mi update
+
 log using "logs/robust_filtibl_mi5_linear_101019.smcl", replace
 *
-* 3B. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: REMOVING HUGE WEBSITE OUTLIERS
+* 4D. FILTERED DATA: REMOVING HUGE WEBSITE OUTLIERS
 *
 
 mi xeq: drop if inquiry_full_count > 10000
@@ -303,7 +450,7 @@ mi update
 
 log using "logs/robust_filtnumpages_mi5_linear_101019.smcl", replace
 *
-* 3C. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: NUMBER PAGES
+* 4E. FILTERED DATA: NUMBER PAGES
 *
 
 mi xeq: drop if numpages > 100
@@ -350,7 +497,7 @@ mi update
 
 log using "logs/robust_filtstudents_mi5_linear_101019.smcl", replace
 *
-* 3D. RE-RUN LINEAR MIXED MODELS USING FILTERED DATA: SCHOOL SIZE (# STUDENTS)
+* 4F. FILTERED DATA: SCHOOL SIZE (# STUDENTS)
 *
 
 mi xeq: drop if students < 10
