@@ -389,9 +389,9 @@ mi est, dots: mixed pocschoolprop primary middle high lnage lnstudents urban || 
 * 1. IBL
 mi est, dots: mixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || state: || geodistrict: , 
 * 2. academic performance
-mi est, dots: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
+mi xeq 0 1 2: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || state: || geodistrict: , 
 * 3. fully specified
-mi est, dots: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
+mi xeq 0 1 2: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || state: || geodistrict: , 
 
 log close
 translate "logs/robust_filtpoc_mi5_linear_030220.smcl" "logs/robustness_check_high_POC_districts.pdf"
