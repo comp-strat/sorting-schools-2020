@@ -59,7 +59,7 @@ pctpdfs "% PDF pages" numwords "# words", alternate
 ** -----------------------------------------------------
 
 /*
-local varlist inquiry_full_log povertyschoolprop pocschoolprop povertysd pocsd readall mathall ///
+local varlist inquiry_full_log povertyschool pocschool povertysd pocsd readall mathall ///
 lnage lnstudents urban numwords numpages pctpdfs
 
 foreach var of inquiry_full_log {
@@ -104,9 +104,22 @@ graph export "visuals/univar_reading_math_proficiency.png", replace width(2160) 
 ** BIVARIATE DISTRIBUTIONS
 ** -----------------------------------------------------
 
-* inquiry_full_log povertyschoolprop pocschoolprop povertysd pocsd readall mathall
+* inquiry_full_log povertyschool pocschool povertysd pocsd readall mathall
 
-* IBL x ...
+* IBL x race and class
+graph twoway lfitci inquiry_full_log povertyschool, ytitle("IBL emphasis (log)")
+graph twoway lfitci inquiry_full_log pocschool, ytitle("IBL emphasis (log)")
+graph twoway lfitci inquiry_full_log povertysd, ytitle("IBL emphasis (log)")
+graph twoway lfitci inquiry_full_log pocsd, ytitle("IBL emphasis (log)")
+
+* Race x class
+graph twoway lfitci povertyschool pocschool, ytitle("% students in poverty")
+graph twoway lfitci povertysd pocsd, ytitle("% people in poverty")
+
+* IBL x reading x math proficiency
+graph twoway lfitci inquiry_full_log readall, ytitle("IBL emphasis (log)")
+graph twoway lfitci inquiry_full_log mathall, ytitle("IBL emphasis (log)")
+graph twoway lfitci mathall readall, ytitle("% proficient in math")
 
 
 ** -----------------------------------------------------
