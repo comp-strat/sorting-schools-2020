@@ -101,25 +101,83 @@ graph export "visuals/univar_reading_math_proficiency.png", replace width(2160) 
 
 
 ** -----------------------------------------------------
-** BIVARIATE DISTRIBUTIONS
+** BIVARIATE DISTRIBUTIONS 
 ** -----------------------------------------------------
 
+* Key vars:
 * inquiry_full_log povertyschool pocschool povertysd pocsd readall mathall
 
+** TWO UNIVARIATE DISTRIBUTIONS (FOR REFERENCE)
+
+* IBL x school poverty
+lab var inquiry_full_log "IBL emphasis (log)"
+kdensity inquiry_full_log, nograph gen(x8 fx8)
+lab var fx8 "All schools"
+kdensity inquiry_full_log if povertyschool > 0.9, nograph gen(fx9) at(x8)
+lab var fx9 "Schools with >90% student poverty"
+line fx8 fx9 x8, sort ytitle(Density)
+graph export "visuals/univar_2_IBL_school_poverty.png", replace width(2160) height(1440)
+
+* IBL x school race
+lab var inquiry_full_log "IBL emphasis (log)"
+kdensity inquiry_full_log, nograph gen(x10 fx10)
+lab var fx10 "All schools"
+kdensity inquiry_full_log if pocschool > 0.9, nograph gen(fx11) at(x10)
+lab var fx11 "Schools with >90% students of color"
+line fx10 fx11 x10, sort ytitle(Density)
+graph export "visuals/univar_2_IBL_school_race.png", replace width(2160) height(1440)
+
+
+** LINE OF BEST FIT
+
+labvars povertyschool "% poor students" pocsd "% POC (SD)" readall "% proficiency in RLA", alternate
+
 * IBL x race and class
-graph twoway lfitci inquiry_full_log povertyschool, ytitle("IBL emphasis (log)")
-graph twoway lfitci inquiry_full_log pocschool, ytitle("IBL emphasis (log)")
-graph twoway lfitci inquiry_full_log povertysd, ytitle("IBL emphasis (log)")
-graph twoway lfitci inquiry_full_log pocsd, ytitle("IBL emphasis (log)")
+graph twoway lfitci inquiry_full_log povertyschool, ytitle("IBL emphasis (log)") xtitle("% students in poverty")
+graph export "visuals/bivar_IBL_school_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci inquiry_full_log pocschool, ytitle("IBL emphasis (log)") xtitle("% students of color")
+graph export "visuals/bivar_IBL_school_race.png", replace width(2160) height(1440)
+graph twoway lfitci inquiry_full_log povertysd, ytitle("IBL emphasis (log)") xtitle("% people in poverty (school district)")
+graph export "visuals/bivar_IBL_sd_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci inquiry_full_log pocsd, ytitle("IBL emphasis (log)") xtitle("% people of color (school district)")
+graph export "visuals/bivar_IBL_sd_race.png", replace width(2160) height(1440)
+
+* reading and math proficiency x race and class
+graph twoway lfitci readall povertyschool, ytitle("% proficiency in RLA") xtitle("% students in poverty")
+graph export "visuals/bivar_RLA_proficiency_school_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci readall pocschool, ytitle("% proficiency in RLA") xtitle("% students of color")
+graph export "visuals/bivar_RLA_proficiency_school_race.png", replace width(2160) height(1440)
+graph twoway lfitci readall povertysd, ytitle("% proficiency in RLA") xtitle("% people in poverty (school district)")
+graph export "visuals/bivar_RLA_proficiency_sd_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci readall pocsd, ytitle("% proficiency in RLA") xtitle("% people of color (school district)")
+graph export "visuals/bivar_RLA_proficiency_sd_race.png", replace width(2160) height(1440)
+graph twoway lfitci mathall povertyschool, ytitle("% proficiency in math") xtitle("% students in poverty")
+graph export "visuals/bivar_math_proficiency_school_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci mathall pocschool, ytitle("% proficiency in math") xtitle("% students of color")
+graph export "visuals/bivar_math_proficiency_school_race.png", replace width(2160) height(1440)
+graph twoway lfitci mathall povertysd, ytitle("% proficiency in math") xtitle("% people in poverty (school district)")
+graph export "visuals/bivar_math_proficiency_district_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci mathall pocsd, ytitle("% proficiency in math") xtitle("% people of color (school district)")
+graph export "visuals/bivar_math_proficiency_district_race.png", replace width(2160) height(1440)
 
 * Race x class
-graph twoway lfitci povertyschool pocschool, ytitle("% students in poverty")
-graph twoway lfitci povertysd pocsd, ytitle("% people in poverty")
+graph twoway lfitci povertyschool pocschool, ytitle("% students in poverty") xtitle("% students of color")
+graph export "visuals/bivar_school_poverty_school_race.png", replace width(2160) height(1440)
+graph twoway lfitci povertyschool pocsd, ytitle("% students in poverty") xtitle("% people of color (school district)")
+graph export "visuals/bivar_school_poverty_district_race.png", replace width(2160) height(1440)
+graph twoway lfitci povertyschool povertysd, ytitle("% students in poverty") xtitle("% people in poverty (school district)")
+graph export "visuals/bivar_school_poverty_district_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci pocschool povertysd, ytitle("% students of color") xtitle("% people in poverty (school district)")
+graph export "visuals/bivar_school_race_district_poverty.png", replace width(2160) height(1440)
+graph twoway lfitci pocschool pocsd, ytitle("% students of color") xtitle("% people of color (school district)")
+graph export "visuals/bivar_school_race_district_race.png", replace width(2160) height(1440)
+graph twoway lfitci povertysd pocsd, ytitle("% people in poverty") xtitle("% people of color (school district)")
+graph export "visuals/bivar_district_poverty_district_race.png", replace width(2160) height(1440)
 
-* IBL x reading x math proficiency
-graph twoway lfitci inquiry_full_log readall, ytitle("IBL emphasis (log)")
-graph twoway lfitci inquiry_full_log mathall, ytitle("IBL emphasis (log)")
-graph twoway lfitci mathall readall, ytitle("% proficient in math")
+* IBL x reading and math proficiency
+*graph twoway lfitci inquiry_full_log readall, ytitle("IBL emphasis (log)")
+*graph twoway lfitci inquiry_full_log mathall, ytitle("IBL emphasis (log)")
+*graph twoway lfitci mathall readall, ytitle("% proficient in math")
 
 
 ** -----------------------------------------------------
