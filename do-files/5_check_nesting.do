@@ -32,25 +32,27 @@ use "data/charter_schools_data_100_imputations.dta", clear
 mi update
 
 
-log using "logs/nesting_mi_linear_101019.smcl", replace
+log using "logs/nesting_mi_linear_102419.smcl", replace
 ** -----------------------------------------------------
 ** CHECK NESTING IN EACH MODEL
 ** -----------------------------------------------------
 
 ** NESTING IN MIXED-EFFECTS LINEAR MODELS PT 1: RACE & POVERTY -> IBL 
 
-* Check nesting without crossed random effects (less accurate):
-mi xeq 1 / 5: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
-
+* Check nesting without crossed random effects (less accurate), do both CMO x state and state x CMO:
+mi xeq 1: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || cmoname: || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed inquiry_full_log primary middle high age students urban pctpdfs || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 * Compare rho for full IBL dictionary (50 terms) from each of five imputations, do both CMO x state and state x CMO:
-mi xeq 1 / 5: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1 / 5: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
-* Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Compare different model parameters. These should all be the same (CMO x state with district nested therein):
 mi xeq 1: quietly xtmixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed inquiry_full_log povertyschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log povertyschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log pocschoolprop primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log povertysd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed inquiry_full_log pocsd primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 * Check against other measures of IBL
 
@@ -70,33 +72,37 @@ mi xeq 1: quietly xtmixed inquiry_full_nohands_log primary middle high lnage lns
 
 ** NESTING IN MIXED-EFFECTS LINEAR MODELS PT 2: IBL, ACADEMICS -> POVERTY
 
-* Check nesting without crossed random effects (less accurate):
-mi xeq 1 / 5: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
-
+* Check nesting without crossed random effects (less accurate), do both CMO x state and state x CMO:
+mi xeq 1: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || cmoname: || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed povertyschoolprop primary middle high age students urban pctpdfs || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 * Compare rho from each of five imputations, do both CMO x state and state x CMO:
-mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1 / 5: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
-* Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
+mi xeq 1 / 3: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed povertyschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Compare different model parameters. These should all be the same (CMO x state with district nested therein):
 mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed povertyschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed povertyschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 
 ** NESTING IN MIXED-EFFECTS LINEAR MODELS PT 3: IBL, ACADEMICS -> RACE
 
-* Check nesting without crossed random effects (less accurate):
-mi xeq 1 / 5: quietly mixed pocschoolcount primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
-
+* Check nesting without crossed random effects (less accurate), do both CMO x state and state x CMO:
+mi xeq 1: quietly mixed pocschoolprop primary middle high age students urban pctpdfs || state: || cmoname: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed pocschoolprop primary middle high age students urban pctpdfs || cmoname: || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed pocschoolprop primary middle high age students urban pctpdfs || state: || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
+mi xeq 1: quietly mixed pocschoolprop primary middle high age students urban pctpdfs || geodistrict: , nolog cov(unstructured) ; estat ic ; estat icc
 * Compare rho from each of five imputations, do both CMO x state and state x CMO:
-mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1 / 5: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
-* Comparing different model parameters. These should all be the same (CMO x state with district nested therein):
+mi xeq 1 / 3: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.cmoname || state: || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed pocschoolprop primary middle high lnage lnstudents urban || _all:R.state || cmoname: || geodistrict: , nolog cov(unstructured) ; xtmrho
+* Compare different model parameters. These should all be the same (CMO x state with district nested therein):
 mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
-mi xeq 1: quietly xtmixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3 : quietly xtmixed pocschoolprop readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
+mi xeq 1 / 3: quietly xtmixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban readlevel14 mathlevel14 pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , nolog cov(unstructured) ; xtmrho
 
 log close
-translate "logs/nesting_mi_linear_101019.smcl" "logs/nesting.pdf"
+translate "logs/nesting_mi_linear_102419.smcl" "logs/nesting.pdf"
 
 
 log using "logs/results_quickpass_mi100_linear_clusts_101019.smcl", replace
@@ -142,10 +148,11 @@ mi xeq 1: mixed pocschoolprop readall14 mathall14 primary middle high lnage lnst
 mi xeq 1: mixed pocschoolprop inquiry_full_log readall14 mathall14 primary middle high lnage lnstudents urban pctpdfs readlevel14 mathlevel14 || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
 
 log close
-translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/mixed_output_fully_nested_quick.pdf"
+translate "logs/results_quickpass_mi100_linear_clusts_101019.smcl" "logs/robustness_check_fully_nested_models_quick.pdf"
+*"mixed_output_fully_nested_quick.pdf"
 
 
-log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
+log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", append
 
 ** -----------------------------------------------------
 ** FULLY NESTED MIXED-EFFECTS LINEAR MODELS (100 IMPUTATIONS) PT 1: RACE & POVERTY -> IBL
@@ -153,16 +160,15 @@ log using "logs/results_1_ibl_mi100_linear_clusts_101019.smcl", replace
 
 * 0. controls only1.
 *mi xeq 1 / 5: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
-est store ibl0
+*mi est, dots post: mixed inquiry_full_log primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
+*est store ibl0
 
-** RUN HERE
-est save "model_estimates/1a_ibl_controls_mi100_linear_clusts.ster", replace
-outreg2 using "tables/1a_ibl_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
-alpha(.001, .01, .05) symbol(***, **, *) ///
-addnote("", "Sources: American Community Survey 2012-16 (U.S. Census Bureau 2018), Common Core of Data 2015-16 (NCES 2018), and the author's data collection.") ///
-title("TABLE 2", "Mixed Effects Models: Effects of Poverty & Race on IBL Emphasis") ///
-ctitle("M0: Controls only")
+*est save "model_estimates/1a_ibl_controls_mi100_linear_clusts.ster", replace
+*outreg2 using "tables/1a_ibl_controls_mi100_linear_clusts.rtf", replace word label onecol addstat(Log-Likelihood, e(ll), chi-square test, r(chi2), F-test, e(p), Prob > F, r(p), R-squared, e(r2)) ///
+*alpha(.001, .01, .05) symbol(***, **, *) ///
+*addnote("", "Sources: American Community Survey 2012-16 (U.S. Census Bureau 2018), Common Core of Data 2015-16 (NCES 2018), and the author's data collection.") ///
+*title("TABLE 2", "Mixed Effects Models: Effects of Poverty & Race on IBL Emphasis") ///
+*ctitle("M0: Controls only")
 
 * 1. school poverty
 *mi xeq 1 / 5: mixed inquiry_full_log povertyschool primary middle high lnage lnstudents urban pctpdfs || _all:R.cmoname || _all:R.state || geodistrict: , cov(unstructured)
@@ -201,7 +207,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M4: School district race")
 
 log close
-translate "logs/results_1_ibl_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt1_IBL_fully_nested.pdf"
+translate "logs/results_1_ibl_mi100_linear_clusts_101019.smcl" "logs/robustness_check_fully_nested_models_1.pdf"
+*"mixed_output_pt1_IBL_fully_nested.pdf"
 
 
 log using "logs/results_2_schpov_mi100_linear_clusts_101019.smcl", replace
@@ -248,7 +255,8 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_2_schpov_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt2_schpov_fully_nested.pdf"
+translate "logs/results_2_schpov_mi100_linear_clusts_101019.smcl" "logs/robustness_check_fully_nested_models_2.pdf"
+*"mixed_output_pt2_schpov_fully_nested.pdf"
 
 
 log using "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl", replace
@@ -292,4 +300,5 @@ alpha(.001, .01, .05) symbol(***, **, *) ///
 ctitle("M3: Fully specified")
 
 log close
-translate "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl" "logs/mixed_output_pt3_schpoc_fully_nested.pdf"
+translate "logs/results_3_schpoc_mi100_linear_clusts_101019.smcl" "logs/robustness_check_fully_nested_models_3.pdf"
+*"mixed_output_pt3_schpoc_fully_nested.pdf"
