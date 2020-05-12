@@ -73,12 +73,12 @@ kdensity inquiry_full_log, gen(x fx) title("")
 graph export "visuals/univar_IBL.png", replace width(2160) height(1440)
 
 * School race and poverty
-lab var povertyschool "% enrolled students"
-kdensity povertyschool, nograph gen(x2 fx2)
-lab var fx2 "% students in poverty"
-kdensity pocschool, nograph gen(fx3) at(x2)
-lab var fx3 "% students of color"
-line fx2 fx3 x2, sort ytitle(Density)
+lab var pocschool "% enrolled students"
+kdensity pocschool, nograph gen(x2 fx2)
+lab var fx2 "% students of color"
+kdensity povertyschool, nograph gen(fx3) at(x2)
+lab var fx3 "% students in poverty"
+line fx2 fx3 x2, sort ytitle(Density) lpattern(dash)
 graph export "visuals/univar_school_race_poverty.png", replace width(2160) height(1440)
 
 * School district race and poverty
@@ -87,7 +87,7 @@ kdensity pocsd, nograph gen(x4 fx4)
 lab var fx4 "% people of color"
 kdensity povertysd, nograph gen(fx5) at(x4)
 lab var fx5 "% people in poverty"
-line fx4 fx5 x4, sort ytitle(Density)
+line fx4 fx5 x4, sort ytitle(Density) lpattern(dash)
 graph export "visuals/univar_district_race_poverty.png", replace width(2160) height(1440)
 
 * Reading and math proficiency
@@ -96,7 +96,7 @@ kdensity readall, nograph gen(x6 fx6)
 lab var fx6 "% proficiency in RLA"
 kdensity mathall, nograph gen(fx7) at(x6)
 lab var fx7 "% proficient in math"
-line fx6 fx7 x6, sort ytitle(Density)
+line fx6 fx7 x6, sort ytitle(Density) lpattern(dash)
 graph export "visuals/univar_reading_math_proficiency.png", replace width(2160) height(1440)
 
 
